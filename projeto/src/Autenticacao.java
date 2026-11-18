@@ -12,9 +12,18 @@ public class Autenticacao {
         senhaCadastrada   = cadastroSenha;
     }
 
+    // Metódo para impedir o cadastro de usúario ou senha que já existe
+    public void cadastrar(String cadastroUsuario, String cadastroSenha){
+        if ( cadastroUsuario.equals(this.usuarioCadastrado) || cadastroSenha.equals(this.senhaCadastrada) ){
+            System.out.println("Esse usúario já existe.");
+        }
+        else {
+            System.out.println("Cadastro realizado com sucesso!");
+        }
+    }
+
     // Método para para autenticar o login do usúario
     public void autenticar(String usuario, String senha) {
-
         if (usuario.equals(usuarioCadastrado) && senha.equals(senhaCadastrada)) {
             System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
         } 
@@ -22,4 +31,5 @@ public class Autenticacao {
             System.out.println("Erro: Usuário ou senha incorretos.");
         }
     }
+
 }

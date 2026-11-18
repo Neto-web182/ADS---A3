@@ -17,7 +17,7 @@ public class MenuPrincipal {
             System.out.print("""
             \n======= Sistema da Pizzaria =====
             {1} - Gerente
-            {2} - Cliente
+            {2} - ver como cliente
             {0} - Encerrar sistema
             =================================
 

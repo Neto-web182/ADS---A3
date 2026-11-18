@@ -44,8 +44,10 @@ public class Login {
                     // Objeto recebendo os dados cadastrados
                     verificacao = new Autenticacao(cadastroUsuario, cadastroSenha);
 
+                    verificacao.cadastrar(cadastroUsuario,cadastroSenha);
+
                     temCadastro = true;
-                    System.out.println("Cadastro realizado com sucesso!");
+                    
 
                     break;
 
