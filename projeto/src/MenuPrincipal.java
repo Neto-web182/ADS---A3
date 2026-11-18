@@ -27,7 +27,7 @@ public class MenuPrincipal {
 
             switch (opcao) {
                 case 1:
-
+                    continuar = true;
                     // loop gerente
                     do{
                         gerenciarCardapio.exibirSistema ();
