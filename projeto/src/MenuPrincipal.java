@@ -1,3 +1,5 @@
+package projeto.src;
+
 import java.util.Scanner;
 
 public class MenuPrincipal {
