@@ -44,6 +44,7 @@ public class Login {
                     // Objeto recebendo os dados cadastrados
                     verificacao = new Autenticacao(cadastroUsuario, cadastroSenha);
 
+                    //OBS não está completo
                     verificacao.cadastrar(cadastroUsuario,cadastroSenha);
 
                     temCadastro = true;
