@@ -8,7 +8,7 @@ public class MenuPrincipal {
         Scanner entrada = new Scanner(System.in);
         SistemaCardapio gerenciarCardapio = new SistemaCardapio() ;
 
-        //var
+        //var2
         boolean continuar  = true ;
         int posicao, opcao ;
 
