@@ -50,7 +50,7 @@ public class MenuPrincipal {
                             case 2:
                                  System.out.println("""
                                 \n=================================================================
-                                                    ADICIONAR NOVO PRODUTO  
+                                                    ADICIONAR PRODUTO  
                                 ==================================================================
                                 """);
 
@@ -64,7 +64,7 @@ public class MenuPrincipal {
                                 double preco = entrada.nextDouble();
                                 
                                 // METÓDO para adicionar o produtoObject no arrayList
-                                gerenciarCardapio.adicionarProduto(produto, descricao, preco);
+                                gerenciarCardapio.adicionarProduto(produto, descricao , preco);
 
                                 System.out.println("\nNovo produto adicionado com sucesso!");
                                 
