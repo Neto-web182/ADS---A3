@@ -8,21 +8,17 @@ public class Login {
         Scanner entrada = new Scanner(System.in);
 
         // declarando minha variável de referência ao meu objeto para que eu possa utilizar em todo escopo de vida do código
-        Autenticacao verificacao = null; 
+        ControleAcesso acesso = new ControleAcesso();
 
         // declarando as variáveis
         int opcao = 0;
-        String cadastroUsuario = "";
-        String cadastroSenha = "";
-        String usuario = "";
-        String senha = "";
         boolean temCadastro = false;
 
         while (opcao != 3) {
             System.out.print("""
             \n==================================
-            |         Tela de Login          |
-            |  [1] - Se cadastrar            |
+            |     Tela de Login Gerente      |
+            |  [1] - Cadastro                |
             |  [2] - Fazer login             |
             |  [3] - Sair                    | 
             ==================================
@@ -36,20 +32,16 @@ public class Login {
                 case 1:
                     System.out.println("\n--- TELA DE CADASTRO ---");
                     System.out.print("Digite o nome de usuário: ");
-                    cadastroUsuario = entrada.nextLine();
+                    String cadastroUsuario = entrada.nextLine();
 
                     System.out.print("Digite a senha: ");
-                    cadastroSenha = entrada.nextLine();
+                    String cadastroSenha = entrada.nextLine();
 
-                    // Objeto recebendo os dados cadastrados
-                    verificacao = new Autenticacao(cadastroUsuario, cadastroSenha);
-
-                    //OBS não está completo
-                    verificacao.cadastrar(cadastroUsuario,cadastroSenha);
-
+                    // Chama o método de cadastrar o gerente e passa as var
+                    acesso.cadastrarGerente(cadastroUsuario, cadastroSenha);
                     temCadastro = true;
                     
-
+                    System.out.println("\nCadastro do gerente realizado com sucesso!\n");
                     break;
 
                 case 2:
@@ -57,13 +49,22 @@ public class Login {
                  
                     if (temCadastro) {
                         System.out.print("Digite o nome de usuário: ");
-                        usuario = entrada.nextLine();
+                        String usuario = entrada.nextLine();
 
                         System.out.print("Digite a senha: ");
-                        senha = entrada.nextLine();
+                        String senha = entrada.nextLine();
 
-                        // Chama o método de autenticação
-                        verificacao.autenticar(usuario, senha);
+                        // Chama o método de autenticação e passa as var
+                        boolean autenticado = acesso.autenticarGerente(usuario, senha);
+
+                        if (autenticado){
+                            System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
+
+                        }
+                        else{
+                            System.out.println("Erro: Usuário ou senha incorretos.");
+                        }
+
                     }
                     else {
                         System.out.println("Nenhum usuário cadastrado!\nFaça o cadastro na opção 1 primeiro.");
