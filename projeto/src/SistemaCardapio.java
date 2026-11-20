@@ -3,19 +3,17 @@ package projeto.src;
 import java.util.ArrayList;
 
 /**
- * @version 1.0
+ * @version 2.0
  * @author : João Moura da Fonseca Neto
- * @date 
+ * @date 20/11/26
  * 
- * @descrição: 
+ * @descrição: ATUALIZADA
  *
  * @componentes utilizados :
  * biblioteca ArrayList;
  * metódos
- * variaveis
- * parametros vindo da classe MenuPrincipal
- * for
- * classe Produto
+ * parametros vindo da classe interfaceConsole
+ * três ArrayList
  * objetos
  */
 
@@ -60,24 +58,23 @@ public class SistemaCardapio {
     }
     
 
-
     // {2} METÓDO para adionar um novo produto
     public void adicionarProduto (String produto, String descricao, double preco){
         // add para adicionar meu novo produto na ArrayList
-        this.produto.add(produto);
-        this.descricao.add(descricao);
-        this.preco.add(preco);
+        this.produto.add (produto);
+        this.descricao.add (descricao);
+        this.preco.add (preco);
     }
 
 
     // {3} METÓDO para alterar produto
     public void alterarProduto (int posicao, String novoProduto, String novaDescricao, double novoPreco){
+
         // Condicional para verificar se a posição informada pelo usúario realmente existe no ArrayList.
         if (posicao >= 0 && posicao < this.produto.size() ){
-            produto.set( posicao , novoProduto);
-            descricao.set( posicao , novaDescricao);
-            preco.set( posicao , novoPreco);
-
+            produto.set (posicao , novoProduto);
+            descricao.set (posicao , novaDescricao);
+            preco.set (posicao , novoPreco);
         }
         else{
             System.out.print("\nPosição inválida!");
@@ -87,11 +84,12 @@ public class SistemaCardapio {
 
     // {4} METÓDO para remover produto
     public void removerProduto (int posicao){
+        
         // Condicional para verificar se a posição informada pelo usúario realmente existe no ArrayList.
         if (posicao >= 0 && posicao < produto.size() ){
             produto.remove (posicao);
-            descricao.remove(posicao);
-            preco.remove(posicao);
+            descricao.remove (posicao);
+            preco.remove (posicao);
 
             System.out.println("Produto removido com sucesso!");
         }         
@@ -114,5 +112,5 @@ public class SistemaCardapio {
         return false ;
     }
 
-}
+}//Fim da classe SistemaCardapio
 

@@ -7,12 +7,13 @@ public class InterfaceConsole {
         
         Scanner entrada = new Scanner(System.in);
 
+        // var de refências aos objetos
         SistemaCardapio gerenciarCardapio = new SistemaCardapio() ;
-        // objeto cliente ainda vai ser desenvolvido
-        SistemaCardapio cliente = new SistemaCardapio() ;
         ControleAcesso acesso = new ControleAcesso();
 
-        boolean continuar = true;
+        // var de parada
+        boolean continuar0 = true;
+
         boolean temCadastro = false;
 
         do{
@@ -58,19 +59,26 @@ public class InterfaceConsole {
                                 break;
 
                             case 2:
+                                //fluxo do pedido do cliente
 
                                 break;
+
+                            default:
+                                System.out.println("Opção inválida! Digite 1, 2 ou 0");
+                                break;
                         }
+
                     } while(opcaoCliente !=0);
 
-                    break;
+                    break; // final do case 1
+
 
                 case 2:
                     while (opcao != 3) {
                         System.out.print("""
                         \n==================================
                         |     Tela de Login Gerente      |
-                        |  [1] - Cadastro                |
+                        |  [1] - Se cadastrar            |
                         |  [2] - Fazer login             |
                         |  [3] - Sair                    | 
                         ==================================
@@ -83,13 +91,13 @@ public class InterfaceConsole {
                         switch (opcao) {
                             case 1:
                                 System.out.println("\n--- TELA DE CADASTRO ---");
+
                                 System.out.print("Digite o nome de usuário: ");
                                 String cadastroUsuario = entrada.nextLine();
-
                                 System.out.print("Digite a senha: ");
                                 String cadastroSenha = entrada.nextLine();
 
-                                // Chama o método de cadastrar o gerente e passa as var
+                                // Chama o método de cadastrar o gerente e passa as variaveis
                                 acesso.cadastrarGerente(cadastroUsuario, cadastroSenha);
                                 temCadastro = true;
                                             
@@ -112,6 +120,7 @@ public class InterfaceConsole {
                                     if (autenticado){
                                         System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
 
+                                        // var de parada do loop a seguir
                                         boolean continuar1 = true;
 
                                         // loop gerente
@@ -157,7 +166,6 @@ public class InterfaceConsole {
                                                     gerenciarCardapio.adicionarProduto(produto, descricao , preco);
 
                                                     System.out.println("\nNovo produto adicionado com sucesso!");
-                                                    
                                                     break;
 
 
@@ -216,7 +224,6 @@ public class InterfaceConsole {
                                                         case "sim":
                                                             gerenciarCardapio.limparCardapio();
                                                             System.out.println("\nTodo o cardápio foi limpado com sucesso!");
-
                                                             break; 
                                                                     
                                                         default:
@@ -232,14 +239,95 @@ public class InterfaceConsole {
                                                     ================================================================= """);
 
                                                     continuar1 = gerenciarCardapio.encerrarMenu();
-                                                    break;                    
-                                            }
+                                                    break; 
+                                                
+                                                default:
+                                                    System.out.println("Opção inválida, digite uma opção existente.");
+                                                    break;
 
-                                        } while (continuar1);
-
-
+                                            } // FInal do switch do gerente
+                                    
+                                        } while (continuar1); // loop do gerente
                                     }
 
+                                    // Se o gerente não for autenticado
+                                    else{
+                                        System.out.println("Erro: Usuário ou senha incorretos.");
+                                    }
+                                }
+
+                                // Se não tiver cadastro
+                                else {
+                                    System.out.println("Nenhum usuário cadastrado!\nFaça o cadastro na opção 1 primeiro.");
+                                }
+
+                                break; // final do case 2 interno
+                                                      
+                            case 3:
+                                System.out.println("Saindo da tela de login do gerente..");                      
+                                break;
+
+                            default:
+                                System.out.println("Opção inválida! Digite 1, 2 ou 3");
+                                break;
+
+                        } // final do switch tela de login do gerente                                 
+                    } 
+                    break; // final do case 2 tela de login
+
+
+                case 3:
+                    // var de parada do loop a seguir
+                    boolean continuar2 = true;
+
+                    while (continuar2) {
+
+                        System.out.print("""
+                        \n==================================
+                        |     Tela de Login do Dono      |
+                        |  [1] - Se cadastrar            |
+                        |  [2] - Fazer login             |
+                        |  [3] - Sair                    | 
+                        ==================================
+                        Digite a opção correspondente:""");
+                        opcao = entrada.nextInt();
+
+                        // bug do Scanner
+                        entrada.nextLine(); 
+
+                        switch (opcao) {
+                            case 1:
+                                System.out.println("\n--- TELA DE CADASTRO ---");
+
+                                System.out.print("Digite o nome de usuário: ");
+                                String cadastroUsuario = entrada.nextLine();
+                                System.out.print("Digite a senha: ");
+                                String cadastroSenha = entrada.nextLine();
+
+                                // Chama o método de cadastrar o dono e passa as variaveis
+                                acesso.cadastrarDono(cadastroUsuario, cadastroSenha);
+                                temCadastro = true;
+                                            
+                                System.out.println("\nCadastro do gerente realizado com sucesso!\n");
+                                break;
+
+                            case 2:
+                                System.out.println("\n--- TELA DE LOGIN ---");
+                                        
+                                if (temCadastro) {
+                                    System.out.print("Digite o nome de usuário: ");
+                                    String usuario = entrada.nextLine();
+
+                                    System.out.print("Digite a senha: ");
+                                    String senha = entrada.nextLine();
+
+                                    // Chama o método de autenticação e passa as var
+                                    boolean autenticado = acesso.autenticarDono(usuario, senha);
+
+                                    if (autenticado){
+                                        System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
+                                        // Fluxo do dono..
+                                    }
                                     else{
                                         System.out.println("Erro: Usuário ou senha incorretos.");
                                     }
@@ -249,25 +337,23 @@ public class InterfaceConsole {
                                     System.out.println("Nenhum usuário cadastrado!\nFaça o cadastro na opção 1 primeiro.");
                                 }
                                 break;
-                                                      
+
                             case 3:
-                                                        
+                                System.out.println("Saindo da tela de login do dono..");  
+                                continuar2 = false ;
                                 break;
 
                             default:
-
+                                System.out.println("Opção inválida! Digite 1, 2 ou 3");
                                 break;
-                        }                                   
-                    } 
 
-                    break;
+                            } // switch tela de login do dono
 
-                case 3:
-                    
+                    } // while da tela do login do dono
                     break; 
 
                 case 0:
-                    continuar = false;
+                    continuar0 = false;
                     System.out.println("Finalizando..");
                     break;           
 
@@ -279,9 +365,10 @@ public class InterfaceConsole {
             }// primeiro switch
 
 
-        } while (continuar);
+        } while (continuar0);
 
 
     }// Main
+    
 
 }
