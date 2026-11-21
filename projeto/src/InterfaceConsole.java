@@ -10,11 +10,12 @@ public class InterfaceConsole {
         // var de refências aos objetos
         SistemaCardapio gerenciarCardapio = new SistemaCardapio() ;
         ControleAcesso acesso = new ControleAcesso();
-
-        // var de parada
-        boolean continuar0 = true;
+        SistemaPedido pedido = new SistemaPedido();
 
         boolean temCadastro = false;
+
+        // var de parada do loop principal a seguir
+        int opcao;
 
         do{
             System.out.print("""
@@ -25,7 +26,7 @@ public class InterfaceConsole {
             {0} - Encerrar sistema
             ===================================
             Selecione seu perfil de acesso: """);
-            int opcao = entrada.nextInt();
+            opcao = entrada.nextInt();
 
             // BUG do Scanner
             entrada.nextLine();
@@ -52,7 +53,7 @@ public class InterfaceConsole {
                             case 1:
                                 System.out.println("""
                                 \n==================================================================
-                                                     CARDÁPIO  ATUAL
+                                                          CARDÁPIO  
                                 ==================================================================
                                 """);   
                                 gerenciarCardapio.exibirCadarpio();
@@ -60,6 +61,72 @@ public class InterfaceConsole {
 
                             case 2:
                                 //fluxo do pedido do cliente
+
+                                int continuarAdicionando;
+
+                                do{
+                                    System.out.println("""
+                                    \n==================================================================
+                                                          CARDÁPIO  
+                                    ==================================================================
+                                    """);   
+                                    gerenciarCardapio.exibirCadarpio();
+
+                                    System.out.print("\n"+nomeCliente+", digite o número do seu pedido por gentileza:");
+                                    int posicaoPedido = entrada.nextInt();
+
+                                    pedido.adicionarProduto(posicaoPedido, gerenciarCardapio.produto, gerenciarCardapio.descricao, gerenciarCardapio.preco);  
+
+                                    System.out.print("\nDeseja adicionar um novo item?\n[1] pra sim\n[0] pra não\nOpção:");
+                                    continuarAdicionando = entrada.nextInt();
+                                
+                                } while(continuarAdicionando != 0);
+
+                                System.out.print("\n(Obs: Oferecemos ifood para os seguintes bairros: Planalto e Pitimbu.)\nSeu pedido vai ser para retirada ou ifood? ");
+                                String modoDeEntrega = entrada.nextLine().toLowerCase();
+
+                                switch (modoDeEntrega) {
+
+                                    case "retirada":
+                                        System.out.println("ok.");
+                                        break;
+
+                                    case "ifood":
+                                        System.out.print("""
+                                        \nTaxa de entrega:
+                                        Bairro Planalto : R$10,00
+                                        Bairro Pitimbu  : R$15,00
+
+                                        Seu bairro: """);
+                                        String opcaoBairro = entrada.nextLine().toLowerCase();
+
+                                        System.out.print("endereço: ");
+                                        String endereco = entrada.nextLine();
+
+                                        pedido.calcularEntrega(opcaoBairro, endereco);
+                                        break;
+                                
+                                    //default para checar se a opção existe dentro do menu, se não existir o loop reinicia.
+                                    default:
+                                        System.out.println("\nOpção inválida. Por favor digite uma opção existente!!\nReiniciando o atendimento..\n\n\n");
+                                        break;
+                                }
+
+                                System.out.println("\nResumo do pedido:");
+                                pedido.exibirResumoPedido();
+
+                                System.out.print("\nObs: responda com sim ou não\nSeu pedido está correto? ");
+                                String confirmacao = entrada.next().toLowerCase();
+
+                                pedido.confirmacaoPedido(confirmacao);
+
+
+
+
+
+
+
+
 
                                 break;
 
@@ -74,21 +141,23 @@ public class InterfaceConsole {
 
 
                 case 2:
-                    while (opcao != 3) {
+                    int opcaoGerente;
+                    
+                    do {
                         System.out.print("""
                         \n==================================
                         |     Tela de Login Gerente      |
                         |  [1] - Se cadastrar            |
                         |  [2] - Fazer login             |
-                        |  [3] - Sair                    | 
+                        |  [0] - Sair                    | 
                         ==================================
                         Digite a opção correspondente:""");
-                        opcao = entrada.nextInt();
+                        opcaoGerente = entrada.nextInt();
 
                         // bug do Scanner
                         entrada.nextLine(); 
 
-                        switch (opcao) {
+                        switch (opcaoGerente) {
                             case 1:
                                 System.out.println("\n--- TELA DE CADASTRO ---");
 
@@ -121,21 +190,21 @@ public class InterfaceConsole {
                                         System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
 
                                         // var de parada do loop a seguir
-                                        boolean continuar1 = true;
+                                        boolean continuarSistema = true;
 
                                         // loop gerente
                                         do{
                                             gerenciarCardapio.exibirSistema ();
                                     
                                             System.out.print("Digite sua opção:");
-                                            int opcao1 = entrada.nextInt();
+                                            int opcaoSistema = entrada.nextInt();
 
                                             // BUG do Scanner
                                             entrada.nextLine();
 
                                             int posicao;
 
-                                            switch (opcao1){
+                                            switch (opcaoSistema){
                                                 case 1:
                                                     System.out.println("""
                                                     \n==================================================================
@@ -238,7 +307,7 @@ public class InterfaceConsole {
                                                                         ENCERRANDO O SISTEMA...
                                                     ================================================================= """);
 
-                                                    continuar1 = gerenciarCardapio.encerrarMenu();
+                                                    continuarSistema = gerenciarCardapio.encerrarMenu();
                                                     break; 
                                                 
                                                 default:
@@ -247,7 +316,7 @@ public class InterfaceConsole {
 
                                             } // FInal do switch do gerente
                                     
-                                        } while (continuar1); // loop do gerente
+                                        } while (continuarSistema); // loop do sistema gerente
                                     }
 
                                     // Se o gerente não for autenticado
@@ -263,34 +332,35 @@ public class InterfaceConsole {
 
                                 break; // final do case 2 interno
                                                       
-                            case 3:
+                            case 0:
                                 System.out.println("Saindo da tela de login do gerente..");                      
                                 break;
 
                             default:
-                                System.out.println("Opção inválida! Digite 1, 2 ou 3");
+                                System.out.println("Opção inválida! Digite 1, 2 ou 0");
                                 break;
 
-                        } // final do switch tela de login do gerente                                 
-                    } 
-                    break; // final do case 2 tela de login
+                        } // final do switch tela de login do gerente  
+
+                    } while (opcaoGerente != 0);  // loop da tela de login Gerente
+
+                    break; // final do case 2 tela de login Gerente
 
 
                 case 3:
                     // var de parada do loop a seguir
-                    boolean continuar2 = true;
+                    int opcaoDono;
 
-                    while (continuar2) {
-
+                    do {
                         System.out.print("""
                         \n==================================
                         |     Tela de Login do Dono      |
                         |  [1] - Se cadastrar            |
                         |  [2] - Fazer login             |
-                        |  [3] - Sair                    | 
+                        |  [0] - Sair                    | 
                         ==================================
                         Digite a opção correspondente:""");
-                        opcao = entrada.nextInt();
+                        opcaoDono = entrada.nextInt();
 
                         // bug do Scanner
                         entrada.nextLine(); 
@@ -338,9 +408,8 @@ public class InterfaceConsole {
                                 }
                                 break;
 
-                            case 3:
+                            case 0:
                                 System.out.println("Saindo da tela de login do dono..");  
-                                continuar2 = false ;
                                 break;
 
                             default:
@@ -349,12 +418,14 @@ public class InterfaceConsole {
 
                             } // switch tela de login do dono
 
-                    } // while da tela do login do dono
-                    break; 
+                    } while (opcaoDono != 0); // loop da tela do login do dono
+
+                    break; // final do case 3 tela de login Dono
+
 
                 case 0:
-                    continuar0 = false;
-                    System.out.println("Finalizando..");
+                    System.out.println("Saindo do portal de acesso..");
+
                     break;           
 
                 default:
@@ -365,7 +436,7 @@ public class InterfaceConsole {
             }// primeiro switch
 
 
-        } while (continuar0);
+        } while (opcao != 0); // loop do portal de acesso
 
 
     }// Main
