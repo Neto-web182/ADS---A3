@@ -61,7 +61,6 @@ public class InterfaceConsole {
 
                             case 2:
                                 //fluxo do pedido do cliente
-
                                 int continuarAdicionando;
 
                                 do{
@@ -82,6 +81,9 @@ public class InterfaceConsole {
                                 
                                 } while(continuarAdicionando != 0);
 
+                                // Bug do scanner
+                                entrada.nextLine();
+
                                 System.out.print("\n(Obs: Oferecemos ifood para os seguintes bairros: Planalto e Pitimbu.)\nSeu pedido vai ser para retirada ou ifood? ");
                                 String modoDeEntrega = entrada.nextLine().toLowerCase();
 
@@ -90,6 +92,7 @@ public class InterfaceConsole {
                                     case "retirada":
                                         System.out.println("ok.");
                                         break;
+
 
                                     case "ifood":
                                         System.out.print("""
@@ -106,109 +109,74 @@ public class InterfaceConsole {
                                         pedido.calcularEntrega(opcaoBairro, endereco);
                                         break;
                                 
-                                    //default para checar se a opção existe dentro do menu, se não existir o loop reinicia.
+                                    //default para checar se a opção existe dentro do menu
                                     default:
-                                        System.out.println("\nOpção inválida. Por favor digite uma opção existente!!\nReiniciando o atendimento..\n\n\n");
+                                        System.out.println("\nOpção inválida.\n");
                                         break;
                                 }
 
-                                System.out.println("\nResumo do pedido:");
+                                System.out.println("\n____________________Resumo do pedido_____________________\n");
                                 pedido.exibirResumoPedido();
 
                                 System.out.print("\nObs: responda com sim ou não\nSeu pedido está correto? ");
                                 String confirmacao = entrada.next().toLowerCase();
 
-                                pedido.confirmarPedido(confirmacao, nomeCliente);
+                                boolean confirmacaoPedido = pedido.confirmarPedido(confirmacao);
 
-                                System.out.printf("Precisa de troco? ");
-                                String respostaTroco = entrada.next().toLowerCase();
+                                if (confirmacaoPedido == true){
+                                    System.out.println("Perfeito "+ nomeCliente +"!!");
 
-                                switch (respostaTroco) {
-                                    case "sim":
-                                        System.out.print("\nTroco pra quanto?\nValor: R$");
-                                        double valor = entrada.nextInt();
-                                        pedido.caulcularTroco(valor, nomeCliente);
+                                    //var de parada do loop a seguir 
+                                    boolean continuarLoopTroco = true;
 
-                                        break;
+                                    do{
+                                        System.out.printf("\nPrecisa de troco? ");
+                                        String respostaTroco = entrada.next().toLowerCase();
 
+                                        switch (respostaTroco) {
+                                            case "sim":
+                                                System.out.print("\nTroco pra quanto?\nValor: R$");
+                                                double valor = entrada.nextInt();
 
+                                                boolean trocoRealizado = pedido.caulcularTroco(valor, nomeCliente);
 
-                                      
+                                                while (trocoRealizado == false){
+                                                    System.out.println("O valor informado é inferior ao valor do pedido. Digite o valor correto..");
+                                                    
+                                                    System.out.print("\nTroco pra quanto?\nValor: R$");
+                                                    valor = entrada.nextInt();
 
-                                    case "não":
-                                    case "nao":
-                                        System.out.println(verde + "\nOk.\nSeu pedido está finalizado!!\nAgradecemos a sua prefêrencia." + limpaCor);
-                                        continuar = false;
-                                        break;
+                                                    trocoRealizado = pedido.caulcularTroco(valor, nomeCliente);
+                                                }
 
-                                    //default para checar se a opção existe dentro do menu, se não existir o loop reinicia.
-                                    default:
-                                        System.out.println("\nOpção inválida. Por favor digite uma opção existente!!\nReiniciando o atendimento..\n\n\n");
-                                        continue; 
+                                                System.out.println("\n"+nomeCliente+" seu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.");
+                                                continuarLoopTroco = false ;
+                                                pedido.limparPedido();
+                                                break;
+                                        
+                                            case "não":
+                                            case "nao":
+                                                System.out.println("\nOk.\nSeu pedido está finalizado!!\nAgradecemos a sua prefêrencia.");
+                                                continuarLoopTroco = false ;
+                                                pedido.limparPedido();
+                                                break;
+
+                                            //default para checar se a opção existe dentro do menu 
+                                            default:
+                                                System.out.println("\nOpção inválida!! Por favor digite 'sim' ou 'não'.\n");
+                                                continuarLoopTroco = true ;
+                                                break;
+                                        }
+                                        
+                                    } while (continuarLoopTroco);
 
                                 }
+                                else{
+                                    System.out.println("Reinicie o atendimento!"); 
+                                    pedido.limparPedido();
+                                }
 
-
-
-
-
-
-
-
-
-                if (valor > valorPedido) {
-                    double troco = valor - valorPedido;
-                    System.out.printf("\nOk, seu troco: R$%.2f \n%sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", troco, verde, limpaCor);
-                    continuar = false;
-                } 
-                else if (valor == valorPedido) {
-                    System.out.printf(cliente + " nesse caso não é necessário troco. %sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", verde, limpaCor);
-                    continuar = false;
-                } 
-                else {
-                    System.out.println("O valor informado é inferior ao valor do pedido.\nDigite o valor correto..");
-                    System.out.print("\nTroco pra quanto?\nValor: R$");
-                    valor = entrada.nextInt();
-
-                    if (valor > valorPedido) {
-                        double troco = valor - valorPedido;
-                        System.out.printf("\nOk, seu troco: R$%.2f \n%sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", troco, verde, limpaCor);
-                        continuar = false;
-                    } 
-
-                    else if (valor == valorPedido) {
-                        System.out.printf(cliente + " nesse caso não é necessário troco. %sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", verde, limpaCor);
-                         continuar = false;
-
-                    } 
-
-                    else {
-                        System.out.println("\nValor informado inferior ao pedido!\nReiniciando o atendimento..");
-                        continue;
-                    }
-                }
-
-                break;
-
-            case "não":
-            case "nao":
-                System.out.println(verde + "\nOk.\nSeu pedido está finalizado!!\nAgradecemos a sua prefêrencia." + limpaCor);
-                continuar = false;
-                break;
-
-            //default para checar se a opção existe dentro do menu, se não existir o loop reinicia.
-            default:
-                System.out.println("\nOpção inválida. Por favor digite uma opção existente!!\nReiniciando o atendimento..\n\n\n");
-                continue;
-        }      
-
-
-
-
-
-
-
-                                break;
+                                break; // final do case interno
 
                             default:
                                 System.out.println("Opção inválida! Digite 1, 2 ou 0");
@@ -445,7 +413,7 @@ public class InterfaceConsole {
                         // bug do Scanner
                         entrada.nextLine(); 
 
-                        switch (opcao) {
+                        switch (opcaoDono) {
                             case 1:
                                 System.out.println("\n--- TELA DE CADASTRO ---");
 
@@ -458,7 +426,7 @@ public class InterfaceConsole {
                                 acesso.cadastrarDono(cadastroUsuario, cadastroSenha);
                                 temCadastro = true;
                                             
-                                System.out.println("\nCadastro do gerente realizado com sucesso!\n");
+                                System.out.println("\nCadastro do dono realizado com sucesso!\n");
                                 break;
 
                             case 2:
