@@ -16,6 +16,10 @@ public class SistemaPedido {
     public String endereco;
     public double valorTotal = subTotal;
 
+    String verde = "\u001B[91m";
+    String limpaCor = "\u001B[0m";
+
+
     public void adicionarProduto(int posicaoPedido, ArrayList<String> produto, ArrayList<String> descricao, ArrayList<Double> preco) {
         // if para verifiar se a posição informada existe no array
         if (posicaoPedido >= 0 && posicaoPedido < produto.size()) {
@@ -32,6 +36,7 @@ public class SistemaPedido {
             System.out.print("\nPosição inválida!");
         }
     }
+
 
     public void calcularEntrega(String opcaoBairro, String endereco) {
         switch (opcaoBairro) {
@@ -54,6 +59,7 @@ public class SistemaPedido {
         this.endereco = endereco;
     }
 
+
     public void exibirResumoPedido() {
         for (int i = 0; i < resumoPedido.size(); i++) {
             System.out.printf("""
@@ -71,6 +77,7 @@ public class SistemaPedido {
         System.out.printf("Total: R$%.2f\n", valorTotal);
     }
 
+
     public boolean confirmarPedido(String confirmacao, String cliente) {
         switch (confirmacao) {
             case "sim":
@@ -78,71 +85,38 @@ public class SistemaPedido {
                 return true;
 
             case "não":
-                System.out.println("");
+                System.out.println("Reinicie o atendimento!");
                 return false;
-    }
 
-            case "sim":
-                System.out.printf("Precisa de troco? ");
-                String respostaTroco = entrada.next().toLowerCase();
-
-                switch (respostaTroco) {
-
-                    case "sim":
-                        System.out.print("\nTroco pra quanto?\nValor: R$");
-                        double valor = entrada.nextInt();
-
-                        if (valor > valorPedido) {
-                            double troco = valor - valorPedido;
-                            System.out.printf("\nOk, seu troco: R$%.2f \n%sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", troco, verde, limpaCor);
-                            continuar = false;
-                        } else if (valor == valorPedido) {
-                            System.out.printf(cliente + " nesse caso não é necessário troco. %sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", verde, limpaCor);
-                            continuar = false;
-                        } else {
-                            System.out.println("O valor informado é inferior ao valor do pedido.\nDigite o valor correto..");
-                            System.out.print("\nTroco pra quanto?\nValor: R$");
-                            valor = entrada.nextInt();
-
-                            if (valor > valorPedido) {
-                                double troco = valor - valorPedido;
-                                System.out.printf("\nOk, seu troco: R$%.2f \n%sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", troco, verde, limpaCor);
-                                continuar = false;
-                            } else if (valor == valorPedido) {
-                                System.out.printf(cliente + " nesse caso não é necessário troco. %sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", verde, limpaCor);
-                                continuar = false;
-                            } else {
-                                System.out.println("\nValor informado inferior ao pedido!\nReiniciando o atendimento..");
-                                continue;
-                            }
-                        }
-
-                        break;
-
-                    case "não":
-                    case "nao":
-                        System.out.println(verde + "\nOk.\nSeu pedido está finalizado!!\nAgradecemos a sua prefêrencia." + limpaCor);
-                        continuar = false;
-                        break;
-
-                    //default para checar se a opção existe dentro do menu, se não existir o loop reinicia.
-                    default:
-                        System.out.println("\nOpção inválida. Por favor digite uma opção existente!!\nReiniciando o atendimento..\n\n\n");
-                        continue;
-                }
-
-                break;
-
-            case "não":
-            case "nao":
-                System.out.println("\nReiniciando o atendimento..\n\n\n");
-                continue;
-
-            //default para checar se a opção existe dentro do menu, se não existir o loop reinicia.
             default:
-                System.out.println("\nOpção inválida. Por favor digite uma opção existente!!\nReiniciando o atendimento..\n\n\n");
-                continue;
-
+                return false;
+                
         }
-
     }
+
+
+    public double caulcularTroco (double valor, String nomeCliente){
+
+        if (valor > this.valorTotal) {
+            double troco = valor - valorTotal;
+            System.out.printf("\nOk, seu troco: R$%.2f \n%sSeu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.%s", troco, verde, limpaCor);
+          
+        } 
+
+        else if (valor == this.valorTotal ) {
+            System.out.printf(nomeCliente + " nesse caso não é necessário troco." );
+      
+        } 
+
+        else {
+            System.out.println("O valor informado é inferior ao valor do pedido.\nDigite o valor correto..");
+            System.out.print("\nTroco pra quanto?\nValor: R$");
+            valor = entrada.nextInt();
+        }          
+    }      
+
+
+}
+
+
+
