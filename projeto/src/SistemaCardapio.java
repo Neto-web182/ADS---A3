@@ -1,21 +1,5 @@
 package projeto.src;
-
 import java.util.ArrayList;
-
-/**
- * @version 2.0
- * @author : João Moura da Fonseca Neto
- * @date 20/11/26
- * 
- * @descrição: ATUALIZADA
- *
- * @componentes utilizados :
- * biblioteca ArrayList;
- * metódos
- * parametros vindo da classe interfaceConsole
- * três ArrayList
- * objetos
- */
 
 public class SistemaCardapio {
     
@@ -23,27 +7,10 @@ public class SistemaCardapio {
     ArrayList <String> produto = new ArrayList<>();
     ArrayList <String> descricao = new ArrayList<>();
     ArrayList <Double> preco = new ArrayList<>();
-
-
-    // metódo para exibir o sistema
-    public void exibirSistema (){
-        System.out.print("""
-        \n==================================================================
-                            SISTEMA DE CARDÁPIO
-        ==================================================================
-        {1} - Listar cardápio.
-        {2} - Adicionar novo produto.
-        {3} - Alterar produto.
-        {4} - Remover produto.
-        {5} - Limpar cardápio.
-        {0} - Sair do menu.
-        -----------------------------------------------------------------
-        """);  
-    }
     
 
     // {1} METÓDO para exibir o cardápio
-    public void exibirCadarpio (){
+    public void exibirCardapio (){
         // Se o tamanho da ArrayList for igual a zero:
         if (produto.size() == 0){
             System.out.println("O cardápio está vazio no momento.");
@@ -75,6 +42,8 @@ public class SistemaCardapio {
             produto.set (posicao , novoProduto);
             descricao.set (posicao , novaDescricao);
             preco.set (posicao , novoPreco);
+
+            System.out.println("\nProduto alterado com sucesso!");
         }
         else{
             System.out.print("\nPosição inválida!");

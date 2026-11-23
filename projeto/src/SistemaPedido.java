@@ -1,5 +1,4 @@
 package projeto.src;
-
 import java.util.ArrayList;
 
 public class SistemaPedido {
@@ -18,7 +17,8 @@ public class SistemaPedido {
     public String bairro ;
     public String endereco ;
 
-
+    
+    // Metódo para adcionar o produto nas arrayList da classe atual
     public void adicionarProduto(int posicaoPedido, ArrayList<String> produto, ArrayList<String> descricao, ArrayList<Double> preco) {
         // if para verifiar se a posição informada existe no array
         if (posicaoPedido >= 0 && posicaoPedido < produto.size()) {
@@ -38,28 +38,33 @@ public class SistemaPedido {
     }
 
 
-    public void calcularEntrega(String opcaoBairro, String endereco) {
-        bairro = opcaoBairro;
+    // Metódo para calcular entrega e guardar o parametro bairro no atributo de classe
+    public boolean calcularEntrega(String opcaoBairro, String endereco) {
 
         switch (opcaoBairro) {
             case "planalto":
+                bairro = opcaoBairro;
+                this.endereco = endereco;
                 taxaEntrega = 10;
                 valorTotal = subTotal + taxaEntrega;
-                break;
+                return false;
 
             case "pitimbu":
+                bairro = opcaoBairro;
+                this.endereco = endereco;
                 taxaEntrega = 15;
                 valorTotal = subTotal + taxaEntrega;
-                break;
+                return false;
 
             default:
-                System.out.println("\nOpção inválida!");
-                break;
+                System.out.println("\nBairro inválida!");
+                return true;        
         }
-        this.endereco = endereco;
+        
     }
 
 
+    // Metódo para exibir o resumo do pedido do cliente
     public void exibirResumoPedido() {
         // for para percorrer as três arrayList da classe atual
         for (int i = 0; i < resumoPedido.size(); i++) {
@@ -69,16 +74,17 @@ public class SistemaPedido {
             Preço: %.2f\n              
             """, resumoPedido.get(i), resumoDescricao.get(i), resumoPreco.get(i));
         }
+
         System.out.print("Quantidade de itens: " + quantidadeItens);
         if (taxaEntrega > 0) {
             System.out.printf("\nSubtotal dos produtos: R$%.2f", subTotal);
             System.out.printf("\nTaxa de entrega: R$%.2f / Bairro: %s / Endereço: %s", taxaEntrega, bairro , endereco);
         }
         System.out.printf("\nTotal: R$%.2f \n", valorTotal);
-        System.out.println("_________________________________________________________");
     }
 
 
+    // Metódo para confirmar o pedido do cliente
     public boolean confirmarPedido(String confirmacao) {
         switch (confirmacao) {
             case "sim":
@@ -94,24 +100,24 @@ public class SistemaPedido {
     }
 
 
-    public boolean caulcularTroco (double valor, String nomeCliente){
+    // Metódo para calcular o troco aplicando regras
+    public boolean calcularTroco (double valor, String nomeCliente){
         if (valor > valorTotal) {
             double troco = valor - valorTotal;
             System.out.printf("\nOk, seu troco: R$%.2f ", troco );
             return true;
         } 
-
         else if (valor == this.valorTotal ) {
             System.out.printf(nomeCliente + " nesse caso não é necessário troco." );
             return true;
         } 
-
         else {
             return false;
         }          
     }      
 
-    // Metódo usado para limpar o pedido pós o atendimento finalizado
+
+    // Metódo usado para limpar o pedido pós o atendimento ser finalizado
     public void limparPedido (){
         // Limpando as arrayList
         resumoPedido.clear();
@@ -126,7 +132,6 @@ public class SistemaPedido {
         bairro = null;
         endereco = null;
     }
-
 
 }
 

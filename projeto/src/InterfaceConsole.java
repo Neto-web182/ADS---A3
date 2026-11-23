@@ -1,130 +1,184 @@
 package projeto.src;
-
 import java.util.Scanner;
+
+/**
+ * @author do código: João Moura da Fonseca Neto
+ * @since de finalização: 
+ * @version 2.0
+ * 
+**/
 
 public class InterfaceConsole {
     public static void main(String[] args) {
-        
+
+        // Objetos (variáveis de refência)
         Scanner entrada = new Scanner(System.in);
-
-        // var de refências aos objetos
+        ControleAcesso acesso             = new ControleAcesso();
         SistemaCardapio gerenciarCardapio = new SistemaCardapio() ;
-        ControleAcesso acesso = new ControleAcesso();
-        SistemaPedido pedido = new SistemaPedido();
+        SistemaPedido pedidoCliente       = new SistemaPedido();
+        SistemaDoDono dono                = new SistemaDoDono();
 
-        boolean temCadastro = false;
+        // var de customização da classe InterfaceConsole
+        String corVermelha = "\u001B[91m";
+        String corVerde    = "\u001B[92m";
+        String amarelo     = "\u001B[93m";
+        String corAzul     = "\u001B[94m";
+        String limpar      = "\u001B[0m";
+        String negrito     = "\u001B[1m";
 
-        // var de parada do loop principal a seguir
+        // Declarando variáveis para poder usar em todo corpo do código
+        String nomeCliente ;
+        String nomePizzaria = "nossa pizzaria";
+
+        // Declarando var de parada do loop principal a seguir
         int opcao;
 
         do{
-            System.out.print("""
-            \n======= Portal de acesso =======
-            {1} - Acesso Cliente 
-            {2} - Acesso Gerente (Login)
-            {3} - Acesso Dono do Restaurante (Login)
-            {0} - Encerrar sistema
+            System.out.printf("""
+            \n%s======= PORTAL DE ACESSO =======%s
+            %s{1}%s - Acesso Cliente 
+            %s{2}%s - Acesso Gerente (Login)
+            %s{3}%s - Acesso Dono do Restaurante (Login)
+            %s{0}%s - Encerrar sistema
             ===================================
-            Selecione seu perfil de acesso: """);
+            Selecione seu perfil de acesso: """, negrito, limpar, corAzul ,limpar, corAzul, limpar, corAzul, limpar, corAzul, limpar);
             opcao = entrada.nextInt();
 
             // BUG do Scanner
             entrada.nextLine();
 
             switch (opcao) {
+              
                 case 1:
-                    System.out.print("\nOlá! Bem-vindo(a) à nossa pizzaria!\nComo posso te chamar? Digite seu nome: ");
-                    String nomeCliente = entrada.nextLine();
+                    //fluxo do pedido do cliente
 
+                    System.out.print("\nOlá! Bem-vindo(a) à "+ nomePizzaria +"!\nComo posso te chamar? Digite seu nome: ");
+                    nomeCliente = entrada.nextLine();
+
+                    // Declarando minha var para poder utilizar no corpo do código do-while
                     int opcaoCliente;
 
                     do {
                         System.out.printf("""
-                        \n=== ATENDIMENTO AO CLIENTE (%s) ===
+                        \n%s======= ATENDIMENTO AO CLIENTE (%s) =======%s
                         {1} - Ver cardápio
                         {2} - Fazer pedido
                         {0} - Encerrar atendimento
-                        Escolha: """,nomeCliente);
+                        Escolha: """,negrito ,nomeCliente ,limpar);
 
                         opcaoCliente = entrada.nextInt();
                         entrada.nextLine();
 
                         switch (opcaoCliente) {
                             case 1:
-                                System.out.println("""
-                                \n==================================================================
+                                System.out.printf("""
+                                \n%s==================================================================
                                                           CARDÁPIO  
-                                ==================================================================
-                                """);   
-                                gerenciarCardapio.exibirCadarpio();
+                                ==================================================================%s
+                                """, negrito, limpar);   
+                                gerenciarCardapio.exibirCardapio();
                                 break;
 
                             case 2:
-                                //fluxo do pedido do cliente
+                                // se o cardápio estiver vazio esse if impede do cliente continuar o fluxo
+                                if (gerenciarCardapio.produto.size() == 0) {
+                                    System.out.println("\nNão é possível fazer o pedido no momento");
+                                    break;
+                                }
+
                                 int continuarAdicionando;
 
                                 do{
-                                    System.out.println("""
-                                    \n==================================================================
+                                    System.out.printf("""
+                                    \n%s==================================================================
                                                           CARDÁPIO  
-                                    ==================================================================
-                                    """);   
-                                    gerenciarCardapio.exibirCadarpio();
-
-                                    System.out.print("\n"+nomeCliente+", digite o número do seu pedido por gentileza:");
+                                    ==================================================================%s
+                                    """, negrito, limpar);   
+                                    gerenciarCardapio.exibirCardapio();
+                                   
+                                    System.out.print("\n"+nomeCliente+", digite o número do seu pedido por gentileza: ");
                                     int posicaoPedido = entrada.nextInt();
 
-                                    pedido.adicionarProduto(posicaoPedido, gerenciarCardapio.produto, gerenciarCardapio.descricao, gerenciarCardapio.preco);  
+                                    pedidoCliente.adicionarProduto(posicaoPedido, gerenciarCardapio.produto, gerenciarCardapio.descricao, gerenciarCardapio.preco);  
 
-                                    System.out.print("\nDeseja adicionar um novo item?\n[1] pra sim\n[0] pra não\nOpção:");
+                                    System.out.print("""
+                                    Deseja adicionar um novo item?
+                                    [1] pra sim
+                                    [0] pra não
+                                    Opção: """);
                                     continuarAdicionando = entrada.nextInt();
-                                
+                                    
+                                   
                                 } while(continuarAdicionando != 0);
 
                                 // Bug do scanner
                                 entrada.nextLine();
 
-                                System.out.print("\n(Obs: Oferecemos ifood para os seguintes bairros: Planalto e Pitimbu.)\nSeu pedido vai ser para retirada ou ifood? ");
-                                String modoDeEntrega = entrada.nextLine().toLowerCase();
+                                // var de parada do loop a seguir
+                                boolean opcaoInvalida = true ;
 
-                                switch (modoDeEntrega) {
+                                do {
+                                    System.out.print("""
+                                    \n(Obs: Oferecemos ifood para os seguintes bairros: Planalto e Pitimbu.)
+                                    Seu pedido vai ser para retirada ou ifood? """);
+                                    String modoDeEntrega = entrada.nextLine().toLowerCase();
 
-                                    case "retirada":
-                                        System.out.println("ok.");
-                                        break;
+                                    switch (modoDeEntrega) {
+                                        case "retirada":
+                                            System.out.println("ok.");
+                                            opcaoInvalida = false;
+                                            break;
 
+                                        case "ifood":
+                                            boolean bairroInvalido;
 
-                                    case "ifood":
-                                        System.out.print("""
-                                        \nTaxa de entrega:
-                                        Bairro Planalto : R$10,00
-                                        Bairro Pitimbu  : R$15,00
+                                            do {
+                                                System.out.print("""
+                                                \nTaxa de entrega:
+                                                Bairro Planalto : R$10,00
+                                                Bairro Pitimbu  : R$15,00
 
-                                        Seu bairro: """);
-                                        String opcaoBairro = entrada.nextLine().toLowerCase();
+                                                Seu bairro: """);
+                                                String opcaoBairro = entrada.nextLine().toLowerCase();
 
-                                        System.out.print("endereço: ");
-                                        String endereco = entrada.nextLine();
+                                                System.out.print("endereço: ");
+                                                String endereco = entrada.nextLine();
 
-                                        pedido.calcularEntrega(opcaoBairro, endereco);
-                                        break;
-                                
-                                    //default para checar se a opção existe dentro do menu
-                                    default:
-                                        System.out.println("\nOpção inválida.\n");
-                                        break;
-                                }
+                                                bairroInvalido = pedidoCliente.calcularEntrega(opcaoBairro, endereco);
 
-                                System.out.println("\n____________________Resumo do pedido_____________________\n");
-                                pedido.exibirResumoPedido();
+                                                if (bairroInvalido) {
+                                                    System.out.println("Digite exatamente 'Planalto' ou 'Pitimbu'.");
+                                                }
+
+                                            } while (bairroInvalido);
+
+                                            opcaoInvalida = false;
+                                            break;
+
+                                        default:
+                                            System.out.println("\nOpção inválida! Digite exatamente 'retirada' ou 'ifood'.\n");
+                                            break;
+                                    }
+
+                                } while (opcaoInvalida);
+
+                                System.out.printf("\n%s____________________Resumo do pedido_____________________%s\n", negrito, limpar);
+                                System.out.println(amarelo);
+                                pedidoCliente.exibirResumoPedido(); 
+                                System.out.print(limpar);
+                                System.out.println("_________________________________________________________");
 
                                 System.out.print("\nObs: responda com sim ou não\nSeu pedido está correto? ");
                                 String confirmacao = entrada.next().toLowerCase();
 
-                                boolean confirmacaoPedido = pedido.confirmarPedido(confirmacao);
+                                boolean confirmacaoPedido = pedidoCliente.confirmarPedido(confirmacao);
 
                                 if (confirmacaoPedido == true){
                                     System.out.println("Perfeito "+ nomeCliente +"!!");
+
+                                    // chamando o metódo para registrar o pedido no sistema de relatório do dono
+                                    dono.registrarPedido( nomeCliente, pedidoCliente.resumoPedido , pedidoCliente.resumoPreco ,
+                                    pedidoCliente.valorTotal , pedidoCliente.taxaEntrega );
 
                                     //var de parada do loop a seguir 
                                     boolean continuarLoopTroco = true;
@@ -136,9 +190,9 @@ public class InterfaceConsole {
                                         switch (respostaTroco) {
                                             case "sim":
                                                 System.out.print("\nTroco pra quanto?\nValor: R$");
-                                                double valor = entrada.nextInt();
+                                                double valor = entrada.nextDouble();
 
-                                                boolean trocoRealizado = pedido.caulcularTroco(valor, nomeCliente);
+                                                boolean trocoRealizado = pedidoCliente.calcularTroco(valor, nomeCliente);
 
                                                 while (trocoRealizado == false){
                                                     System.out.println("O valor informado é inferior ao valor do pedido. Digite o valor correto..");
@@ -146,24 +200,32 @@ public class InterfaceConsole {
                                                     System.out.print("\nTroco pra quanto?\nValor: R$");
                                                     valor = entrada.nextInt();
 
-                                                    trocoRealizado = pedido.caulcularTroco(valor, nomeCliente);
+                                                    trocoRealizado = pedidoCliente.calcularTroco(valor, nomeCliente);
                                                 }
 
-                                                System.out.println("\n"+nomeCliente+" seu atendimento foi finalizado!!\nAgradecemos a sua prefêrencia.");
+                                                System.out.printf("""
+                                                %s%s seu atendimento foi finalizado!!
+                                                Agradecemos a sua prefêrencia.%s \n""", corVerde , nomeCliente, limpar );
+
                                                 continuarLoopTroco = false ;
-                                                pedido.limparPedido();
+                                                pedidoCliente.limparPedido();
                                                 break;
                                         
                                             case "não":
                                             case "nao":
-                                                System.out.println("\nOk.\nSeu pedido está finalizado!!\nAgradecemos a sua prefêrencia.");
+
+                                                System.out.printf("""
+                                                %sOk.
+                                                Seu pedido está finalizado %s!!
+                                                Agradecemos a sua prefêrencia.%s \n""", corVerde, nomeCliente, limpar );
+
                                                 continuarLoopTroco = false ;
-                                                pedido.limparPedido();
+                                                pedidoCliente.limparPedido();
                                                 break;
 
                                             //default para checar se a opção existe dentro do menu 
                                             default:
-                                                System.out.println("\nOpção inválida!! Por favor digite 'sim' ou 'não'.\n");
+                                                System.out.println(corVermelha+"\nOpção inválida!! Por favor digite 'sim' ou 'não'.\n"+limpar);
                                                 continuarLoopTroco = true ;
                                                 break;
                                         }
@@ -172,34 +234,39 @@ public class InterfaceConsole {
 
                                 }
                                 else{
-                                    System.out.println("Reinicie o atendimento!"); 
-                                    pedido.limparPedido();
+                                    System.out.println(corVermelha+"Reinicie o atendimento!"+limpar); 
+                                    pedidoCliente.limparPedido();
                                 }
 
                                 break; // final do case interno
 
+                            case 0:
+                                System.out.println("Saindo do atendimento..");
+                                break;
+
                             default:
-                                System.out.println("Opção inválida! Digite 1, 2 ou 0");
+                                System.out.println(corVermelha+"Opção inválida! Digite 1, 2 ou 0."+limpar);
                                 break;
                         }
 
                     } while(opcaoCliente !=0);
 
-                    break; // final do case 1
+                    break; // final do fluxo cliente
 
 
                 case 2:
+                    // fluxo gerente
                     int opcaoGerente;
                     
                     do {
-                        System.out.print("""
+                        System.out.printf("""
                         \n==================================
-                        |     Tela de Login Gerente      |
+                        |     %sTela de Login Gerente%s      |
                         |  [1] - Se cadastrar            |
                         |  [2] - Fazer login             |
                         |  [0] - Sair                    | 
                         ==================================
-                        Digite a opção correspondente:""");
+                        Digite a opção correspondente: """, negrito, limpar);
                         opcaoGerente = entrada.nextInt();
 
                         // bug do Scanner
@@ -216,15 +283,13 @@ public class InterfaceConsole {
 
                                 // Chama o método de cadastrar o gerente e passa as variaveis
                                 acesso.cadastrarGerente(cadastroUsuario, cadastroSenha);
-                                temCadastro = true;
                                             
-                                System.out.println("\nCadastro do gerente realizado com sucesso!\n");
                                 break;
 
                             case 2:
                                 System.out.println("\n--- TELA DE LOGIN ---");
                                         
-                                if (temCadastro) {
+                                if (acesso.usuarioGerente != null) {
                                     System.out.print("Digite o nome de usuário: ");
                                     String usuario = entrada.nextLine();
 
@@ -242,9 +307,19 @@ public class InterfaceConsole {
 
                                         // loop gerente
                                         do{
-                                            gerenciarCardapio.exibirSistema ();
-                                    
-                                            System.out.print("Digite sua opção:");
+                                            System.out.printf("""
+                                            \n%s==================================================================
+                                                                SISTEMA DE CARDÁPIO
+                                            ==================================================================%s
+                                            {1} - Listar cardápio.
+                                            {2} - Adicionar novo produto.
+                                            {3} - Alterar produto.
+                                            {4} - Remover produto.
+                                            {5} - Limpar cardápio.
+                                            {0} - Sair do menu.
+                                            -----------------------------------------------------------------
+                                            """, negrito, limpar);  
+                                            System.out.print("Digite sua opção: ");
                                             int opcaoSistema = entrada.nextInt();
 
                                             // BUG do Scanner
@@ -254,21 +329,21 @@ public class InterfaceConsole {
 
                                             switch (opcaoSistema){
                                                 case 1:
-                                                    System.out.println("""
-                                                    \n==================================================================
+                                                    System.out.printf("""
+                                                    \n%s==================================================================
                                                                         CARDÁPIO  ATUAL
-                                                    ==================================================================
-                                                    """);   
-                                                    gerenciarCardapio.exibirCadarpio();
+                                                    ==================================================================%s
+                                                    """, negrito, limpar);   
+                                                    gerenciarCardapio.exibirCardapio();
                                                     break;
 
 
                                                 case 2:
-                                                    System.out.println("""
-                                                    \n=================================================================
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
                                                                         ADICIONAR PRODUTO  
-                                                    ==================================================================
-                                                    """);
+                                                    ==================================================================%s
+                                                    """, negrito, limpar);
 
                                                     System.out.print("Digite o novo produto: ");
                                                     String produto = entrada.nextLine();
@@ -287,11 +362,11 @@ public class InterfaceConsole {
 
 
                                                 case 3:
-                                                    System.out.println("""
-                                                    \n=================================================================
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
                                                                         ALTERAR PRODUTO  
-                                                    =================================================================    
-                                                    """);
+                                                    =================================================================%s 
+                                                    """, negrito, limpar);
 
                                                     System.out.print("Primeiro digite a posição do produto que você quer alterar.\nPosição: ");
                                                     posicao = entrada.nextInt();
@@ -311,15 +386,14 @@ public class InterfaceConsole {
                                                         //METÓDO para alterar o produto
                                                         gerenciarCardapio.alterarProduto(posicao, novoProduto, novaDescricao, novoPreco);
                                                         
-                                                        System.out.println("\nProduto alterado com sucesso!");
                                                     break;
 
                                                 case 4:
-                                                    System.out.println("""
-                                                    \n=================================================================
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
                                                                         REMOVER PRODUTO  
-                                                    =================================================================  
-                                                    """);
+                                                    =================================================================%s
+                                                    """, negrito, limpar);
 
                                                     System.out.print("Digite a posição do produto que deseja remover: ");
                                                     posicao = entrada.nextInt();
@@ -328,11 +402,11 @@ public class InterfaceConsole {
                                                     break;
 
                                                 case 5:
-                                                    System.out.println("""
-                                                    \n=================================================================
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
                                                                         LIMPAR TODO CARDÁPIO  
-                                                    ================================================================= 
-                                                    """);
+                                                    ================================================================= %s
+                                                    """, negrito , limpar);
 
                                                     System.out.print("Deseja mesmo limpar todo cardápio? Se sim, escreva 'sim'.\nSe não, digite qualquer outra coisa.\nConfirme: ");
                                                     String confirmacao = entrada.nextLine().toLowerCase();
@@ -350,26 +424,27 @@ public class InterfaceConsole {
                                                     break;
 
                                                 case 0:
-                                                    System.out.println("""
-                                                    \n=================================================================
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
                                                                         ENCERRANDO O SISTEMA...
-                                                    ================================================================= """);
+                                                    ================================================================= %s
+                                                    """, negrito , limpar);
 
                                                     continuarSistema = gerenciarCardapio.encerrarMenu();
                                                     break; 
                                                 
                                                 default:
-                                                    System.out.println("Opção inválida, digite uma opção existente.");
+                                                    System.out.println(corVermelha+"Opção inválida, digite uma opção existente."+limpar);
                                                     break;
 
-                                            } // FInal do switch do gerente
+                                            } // Final do switch do gerente
                                     
                                         } while (continuarSistema); // loop do sistema gerente
                                     }
 
                                     // Se o gerente não for autenticado
                                     else{
-                                        System.out.println("Erro: Usuário ou senha incorretos.");
+                                        System.out.println(corVermelha+"Erro: Usuário ou senha incorretos."+limpar);
                                     }
                                 }
 
@@ -385,29 +460,29 @@ public class InterfaceConsole {
                                 break;
 
                             default:
-                                System.out.println("Opção inválida! Digite 1, 2 ou 0");
+                                System.out.println(corVermelha+"Opção inválida! Digite 1, 2 ou 0."+limpar);
                                 break;
 
                         } // final do switch tela de login do gerente  
 
                     } while (opcaoGerente != 0);  // loop da tela de login Gerente
 
-                    break; // final do case 2 tela de login Gerente
+                    break; // final do fluxo do gerente
 
 
                 case 3:
-                    // var de parada do loop a seguir
+                    // fluxo do dono
                     int opcaoDono;
 
                     do {
-                        System.out.print("""
+                        System.out.printf("""
                         \n==================================
-                        |     Tela de Login do Dono      |
+                        |     %sTela de Login do Dono%s      |
                         |  [1] - Se cadastrar            |
                         |  [2] - Fazer login             |
                         |  [0] - Sair                    | 
                         ==================================
-                        Digite a opção correspondente:""");
+                        Digite a opção correspondente: """, negrito, limpar);
                         opcaoDono = entrada.nextInt();
 
                         // bug do Scanner
@@ -424,15 +499,13 @@ public class InterfaceConsole {
 
                                 // Chama o método de cadastrar o dono e passa as variaveis
                                 acesso.cadastrarDono(cadastroUsuario, cadastroSenha);
-                                temCadastro = true;
                                             
-                                System.out.println("\nCadastro do dono realizado com sucesso!\n");
                                 break;
 
                             case 2:
                                 System.out.println("\n--- TELA DE LOGIN ---");
                                         
-                                if (temCadastro) {
+                                if (acesso.usuarioDono != null) {
                                     System.out.print("Digite o nome de usuário: ");
                                     String usuario = entrada.nextLine();
 
@@ -444,13 +517,75 @@ public class InterfaceConsole {
 
                                     if (autenticado){
                                         System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
-                                        // Fluxo do dono..
-                                    }
-                                    else{
-                                        System.out.println("Erro: Usuário ou senha incorretos.");
-                                    }
-                                }
 
+                                        int opcaoSistemaRelatorio;
+
+                                        do { 
+                                            System.out.printf("""
+                                            \n%s==================================================================
+                                                                SISTEMA DO DONO
+                                            ==================================================================%s
+                                            {1} - Acessar Faturamento do dia
+                                            {2} - Acessar Histórico da pizzaria
+                                            {3} - Modificar nome da pizzaria
+                                            {0} - Sair do sistema
+
+                                            -----------------------------------------------------------------
+                                            """, negrito, limpar);  
+
+                                            System.out.print("Digite sua opção: ");
+                                            opcaoSistemaRelatorio = entrada.nextInt();
+
+                                            // Bug do scanner
+                                            entrada.nextLine();
+
+                                            switch (opcaoSistemaRelatorio){
+                                                case 1:
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
+                                                                        FATURAMENTO DA PIZZARIA
+                                                    =================================================================%s
+                                                    """, negrito, limpar);
+
+                                                    dono.exibirFaturamento();
+                                                    break;
+
+                                                case 2:
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
+                                                                        HISTÓRICO DA PIZZARIA
+                                                    =================================================================%s
+                                                    """, negrito, limpar);
+
+                                                    dono.exibirHistorico();
+                                                    break;
+
+                                                case 3:
+                                                    System.out.printf("""
+                                                    \n%s=================================================================
+                                                                        NOVO NOME DA PIZZARIA   
+                                                    =================================================================%s 
+                                                    """, negrito , limpar);
+
+                                                    System.out.print("Digite o novo nome da pizaria (ex: pizzaria do..)\nNovo nome: ");
+                                                    String novoNome = entrada.nextLine();
+
+                                                    nomePizzaria = dono.modificarNome(novoNome);
+                                                    break;    
+
+                                                case 0:
+                                                    System.out.println("Saindo do sistema de relatório..");
+                                                    break;
+
+                                                default:
+                                                    System.out.println(corVermelha+"Opção inválida! Digite 1, 2, 3 ou 0."+limpar);
+                                                    break;
+                                            }
+
+                                        } while (opcaoSistemaRelatorio != 0);
+                                    }
+
+                                }
                                 else {
                                     System.out.println("Nenhum usuário cadastrado!\nFaça o cadastro na opção 1 primeiro.");
                                 }
@@ -461,14 +596,14 @@ public class InterfaceConsole {
                                 break;
 
                             default:
-                                System.out.println("Opção inválida! Digite 1, 2 ou 3");
+                                System.out.println(corVermelha+"Opção inválida! Digite 1, 2 ou 0."+limpar);
                                 break;
 
                             } // switch tela de login do dono
 
                     } while (opcaoDono != 0); // loop da tela do login do dono
 
-                    break; // final do case 3 tela de login Dono
+                    break; // final do fluxo do dono
 
 
                 case 0:
@@ -477,7 +612,7 @@ public class InterfaceConsole {
                     break;           
 
                 default:
-                    System.out.println("Opção inválida! Digite 1, 2, 3 ou 0");
+                    System.out.println(corVermelha+"Opção inválida! Digite 1, 2, 3 ou 0"+limpar);
                     break;
 
 
@@ -486,8 +621,8 @@ public class InterfaceConsole {
 
         } while (opcao != 0); // loop do portal de acesso
 
+        System.out.println(corVerde+"\nSistema encerrado!!"+limpar);
 
     }// Main
     
-
 }
