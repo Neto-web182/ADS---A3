@@ -119,8 +119,8 @@ public class InterfaceConsole {
 
                                 do {
                                     System.out.print("""
-                                    \n(Obs: Oferecemos ifood para os seguintes bairros: Planalto e Pitimbu.)
-                                    Seu pedido vai ser para retirada ou ifood? """);
+                                    \n(Obs: Oferecemos entrega para os seguintes bairros: Planalto e Pitimbu.)
+                                    Seu pedido vai ser para retirada ou entrega? """);
                                     String modoDeEntrega = entrada.nextLine().toLowerCase();
 
                                     switch (modoDeEntrega) {
@@ -129,7 +129,7 @@ public class InterfaceConsole {
                                             opcaoInvalida = false;
                                             break;
 
-                                        case "ifood":
+                                        case "entrega":
                                             boolean bairroInvalido;
 
                                             do {
@@ -156,7 +156,7 @@ public class InterfaceConsole {
                                             break;
 
                                         default:
-                                            System.out.println("\nOpção inválida! Digite exatamente 'retirada' ou 'ifood'.\n");
+                                            System.out.println("\nOpção inválida! Digite exatamente 'retirada' ou 'entrega'.\n");
                                             break;
                                     }
 
@@ -195,7 +195,7 @@ public class InterfaceConsole {
                                                 boolean trocoRealizado = pedidoCliente.calcularTroco(valor, nomeCliente);
 
                                                 while (trocoRealizado == false){
-                                                    System.out.println("O valor informado é inferior ao valor do pedido. Digite o valor correto..");
+                                                    System.out.println("\nO valor informado é inferior ao valor do pedido. Digite o valor correto..");
                                                     
                                                     System.out.print("\nTroco pra quanto?\nValor: R$");
                                                     valor = entrada.nextDouble();
@@ -204,7 +204,7 @@ public class InterfaceConsole {
                                                 }
 
                                                 System.out.printf("""
-                                                %s%s seu atendimento foi finalizado!!
+                                                \n%s%s seu atendimento foi finalizado!!
                                                 Agradecemos a sua prefêrencia.%s \n""", corVerde , nomeCliente, limpar );
 
                                                 continuarLoopTroco = false ;
@@ -215,7 +215,7 @@ public class InterfaceConsole {
                                             case "nao":
 
                                                 System.out.printf("""
-                                                %sOk.
+                                                \n%sOk.
                                                 Seu pedido está finalizado %s!!
                                                 Agradecemos a sua prefêrencia.%s \n""", corVerde, nomeCliente, limpar );
 
