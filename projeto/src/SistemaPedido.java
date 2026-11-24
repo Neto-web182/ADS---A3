@@ -3,19 +3,19 @@ import java.util.ArrayList;
 
 public class SistemaPedido {
 
-    ArrayList<String> resumoPedido = new ArrayList<>();
-    ArrayList<String> resumoDescricao = new ArrayList<>();
-    ArrayList<Double> resumoPreco = new ArrayList<>();
+    private ArrayList<String> resumoPedido = new ArrayList<>();
+    private ArrayList<String> resumoDescricao = new ArrayList<>();
+    private ArrayList<Double> resumoPreco = new ArrayList<>();
 
     // ATRIBUTOS          
-    public int quantidadeItens = 0;
+    private int quantidadeItens = 0;
 
-    public double subTotal = 0;
-    public double taxaEntrega = 0;
-    public double valorTotal = 0;
+    private double subTotal = 0;
+    private double taxaEntrega = 0;
+    private double valorTotal = 0;
 
-    public String bairro ;
-    public String endereco ;
+    private String bairro ;
+    private String endereco ;
 
     
     // Metódo para adcionar o produto nas arrayList da classe atual
@@ -131,6 +131,22 @@ public class SistemaPedido {
         valorTotal = 0;
         bairro = null;
         endereco = null;
+    }
+
+    public ArrayList<String> getResumoPedido() {
+        return resumoPedido;
+    }
+
+    public ArrayList<Double> getResumoPreco() {
+        return resumoPreco;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public double getTaxaEntrega() {
+        return taxaEntrega;
     }
 
 }
