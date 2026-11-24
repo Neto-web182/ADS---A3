@@ -3,13 +3,13 @@ import java.util.ArrayList;
 
 public class SistemaDoDono {
     
-    ArrayList <String> relatorioClientes = new ArrayList<>();
-    ArrayList <String> relatorioItemComprado = new ArrayList<>();
-    ArrayList <Double> relatorioPrecoItem = new ArrayList<>();
+    private ArrayList <String> relatorioClientes = new ArrayList<>();
+    private ArrayList <String> relatorioItemComprado = new ArrayList<>();
+    private ArrayList <Double> relatorioPrecoItem = new ArrayList<>();
 
     // Atributos
-    public double relatorioTaxaEntrega = 0;
-    public double faturamentoPizzaria = 0 ;
+    private double relatorioTaxaEntrega = 0;
+    private double faturamentoPizzaria = 0 ;
 
 
     //Metódo para registrar o pedido após a confirmação da classe interfaceConsole

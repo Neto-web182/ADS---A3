@@ -198,7 +198,7 @@ public class InterfaceConsole {
                                                     System.out.println("O valor informado é inferior ao valor do pedido. Digite o valor correto..");
                                                     
                                                     System.out.print("\nTroco pra quanto?\nValor: R$");
-                                                    valor = entrada.nextInt();
+                                                    valor = entrada.nextDouble();
 
                                                     trocoRealizado = pedidoCliente.calcularTroco(valor, nomeCliente);
                                                 }
@@ -289,7 +289,7 @@ public class InterfaceConsole {
                             case 2:
                                 System.out.println("\n--- TELA DE LOGIN ---");
                                         
-                                if (acesso.usuarioGerente != null) {
+                                if (acesso.gerenteCadastrado()) {
                                     System.out.print("Digite o nome de usuário: ");
                                     String usuario = entrada.nextLine();
 
@@ -505,7 +505,7 @@ public class InterfaceConsole {
                             case 2:
                                 System.out.println("\n--- TELA DE LOGIN ---");
                                         
-                                if (acesso.usuarioDono != null) {
+                                if (acesso.donoCadastrado()) {
                                     System.out.print("Digite o nome de usuário: ");
                                     String usuario = entrada.nextLine();
 
