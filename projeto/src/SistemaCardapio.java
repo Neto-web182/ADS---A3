@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class SistemaCardapio {
     
     // var de referencias a objetos
-    ArrayList <String> produto = new ArrayList<>();
-    ArrayList <String> descricao = new ArrayList<>();
-    ArrayList <Double> preco = new ArrayList<>();
+     ArrayList <String> produto = new ArrayList<>();
+     ArrayList <String> descricao = new ArrayList<>();
+     ArrayList <Double> preco = new ArrayList<>();
     
 
     // {1} METÓDO para exibir o cardápio
