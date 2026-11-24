@@ -3,11 +3,19 @@ package projeto.src;
 public class ControleAcesso {
 
     // Atributos para guardar os dados 
-    public String usuarioGerente ;
-    public String senhaGerente ;
+    private String usuarioGerente ;
+    private String senhaGerente ;
 
-    public String usuarioDono ;
-    public String senhaDono ;
+    private String usuarioDono ;
+    private String senhaDono ;
+
+    public boolean gerenteCadastrado() {
+        return usuarioGerente != null;
+    }
+
+    public boolean donoCadastrado() {
+        return usuarioDono != null;
+    }
 
 
     // metódo que aplica as regras de cadastro e cadastra o gerente
@@ -56,5 +64,4 @@ public class ControleAcesso {
             return false;
         }
     }
-
 }
