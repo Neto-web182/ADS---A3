@@ -195,7 +195,7 @@ public class InterfaceConsole {
                                                 boolean trocoRealizado = pedidoCliente.calcularTroco(valor, nomeCliente);
 
                                                 while (trocoRealizado == false){
-                                                    System.out.println("O valor informado é inferior ao valor do pedido. Digite o valor correto..");
+                                                    System.out.println("\nO valor informado é inferior ao valor do pedido. Digite o valor correto..");
                                                     
                                                     System.out.print("\nTroco pra quanto?\nValor: R$");
                                                     valor = entrada.nextDouble();
@@ -204,7 +204,7 @@ public class InterfaceConsole {
                                                 }
 
                                                 System.out.printf("""
-                                                %s%s seu atendimento foi finalizado!!
+                                                \n%s%s seu atendimento foi finalizado!!
                                                 Agradecemos a sua prefêrencia.%s \n""", corVerde , nomeCliente, limpar );
 
                                                 continuarLoopTroco = false ;
@@ -215,7 +215,7 @@ public class InterfaceConsole {
                                             case "nao":
 
                                                 System.out.printf("""
-                                                %sOk.
+                                                \n%sOk.
                                                 Seu pedido está finalizado %s!!
                                                 Agradecemos a sua prefêrencia.%s \n""", corVerde, nomeCliente, limpar );
 
