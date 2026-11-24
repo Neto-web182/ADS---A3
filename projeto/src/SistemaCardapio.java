@@ -36,18 +36,9 @@ public class SistemaCardapio {
 
     // {3} METÓDO para alterar produto
     public void alterarProduto (int posicao, String novoProduto, String novaDescricao, double novoPreco){
-
-        // Condicional para verificar se a posição informada pelo usúario realmente existe no ArrayList.
-        if (posicao >= 0 && posicao < this.produto.size() ){
             produto.set (posicao , novoProduto);
             descricao.set (posicao , novaDescricao);
-            preco.set (posicao , novoPreco);
-
-            System.out.println("\nProduto alterado com sucesso!");
-        }
-        else{
-            System.out.print("\nPosição inválida!");
-        }
+            preco.set (posicao , novoPreco); 
     }
 
 

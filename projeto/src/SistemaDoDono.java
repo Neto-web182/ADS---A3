@@ -32,13 +32,17 @@ public class SistemaDoDono {
 
     
     // Metódo para exibir o histórico da pizzaria
-    public void exibirHistorico (){
+    public void exibirHistorico (String nomeGerente, String senhaGerente){
         for (int i = 0; i < relatorioClientes.size(); i ++){
             System.out.println("\n[ "+ i +" ] Cliente: "+ relatorioClientes.get(i));
             System.out.printf("        Item: %s  Preço: R$%.2f \n", relatorioItemComprado.get(i) , relatorioPrecoItem.get(i));
             System.out.println("\n________________________________________________________________");
         }
         System.out.printf ("\nTotal taxa de entrega no dia: R$%.2f\n",relatorioTaxaEntrega);
+
+        System.out.println("\nInformações sobre o gerente_");
+        System.out.println("Nome do gerente: "+ nomeGerente);
+        System.out.println("Senha do gerente: "+ senhaGerente);
     }
 
 

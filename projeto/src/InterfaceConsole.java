@@ -1,6 +1,6 @@
 package projeto.src;
-import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  * @author do código: João Moura da Fonseca Neto
@@ -277,13 +277,13 @@ public class InterfaceConsole {
                             case 1:
                                 System.out.println("\n--- TELA DE CADASTRO ---");
 
-                                System.out.print("Digite o nome de usuário: ");
-                                String cadastroUsuario = entrada.nextLine();
+                                System.out.print("Digite o seu nome: ");
+                                String cadastroGerente = entrada.nextLine();
                                 System.out.print("Digite a senha: ");
                                 String cadastroSenha = entrada.nextLine();
 
                                 // Chama o método de cadastrar o gerente e passa as variaveis
-                                acesso.cadastrarGerente(cadastroUsuario, cadastroSenha);
+                                acesso.cadastrarGerente(cadastroGerente, cadastroSenha);
                                             
                                 break;
 
@@ -291,20 +291,22 @@ public class InterfaceConsole {
                                 System.out.println("\n--- TELA DE LOGIN ---");
                                         
                                 if (acesso.gerenteCadastrado()) {
-                                    System.out.print("Digite o nome de usuário: ");
-                                    String usuario = entrada.nextLine();
+                                    System.out.print("Digite o seu nome: ");
+                                    String usuarioGerente = entrada.nextLine();
 
                                     System.out.print("Digite a senha: ");
-                                    String senha = entrada.nextLine();
+                                    String senhaGerente = entrada.nextLine();
 
                                     // Chama o método de autenticação e passa as var
-                                    boolean autenticado = acesso.autenticarGerente(usuario, senha);
+                                    boolean autenticado = acesso.autenticarGerente(usuarioGerente, senhaGerente);
 
                                     if (autenticado){
-                                        System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
+                                        System.out.println("Acesso permitido! Bem-vindo "+ usuarioGerente +"!");
 
                                         // var de parada do loop a seguir
                                         boolean continuarSistema = true;
+
+                                        boolean cadarpioCadastrado = false ;
 
                                         // loop gerente
                                         do{
@@ -320,12 +322,13 @@ public class InterfaceConsole {
                                             {0} - Sair do menu.
                                             -----------------------------------------------------------------
                                             """, negrito, limpar);  
+
                                             System.out.print("Digite sua opção: ");
                                             int opcaoSistema = lerInteiro(entrada);
 
                                             // BUG do Scanner
                                             entrada.nextLine();
-
+                            
                                             int posicao;
 
                                             switch (opcaoSistema){
@@ -336,6 +339,7 @@ public class InterfaceConsole {
                                                     ==================================================================%s
                                                     """, negrito, limpar);   
                                                     gerenciarCardapio.exibirCardapio();
+
                                                     break;
 
 
@@ -359,69 +363,106 @@ public class InterfaceConsole {
                                                     gerenciarCardapio.adicionarProduto(produto, descricao , preco);
 
                                                     System.out.println("\nNovo produto adicionado com sucesso!");
+
+                                                    cadarpioCadastrado = true;
                                                     break;
 
 
                                                 case 3:
-                                                    System.out.printf("""
-                                                    \n%s=================================================================
-                                                                        ALTERAR PRODUTO  
-                                                    =================================================================%s 
-                                                    """, negrito, limpar);
+                                                    if (cadarpioCadastrado == false) {
+                                                        System.out.println("Não há produtos para alterar! Adicione um produto no cardápio primeiro.");
+                                                    }
 
-                                                    System.out.print("Primeiro digite a posição do produto que você quer alterar.\nPosição: ");
-                                                    posicao = lerInteiro(entrada);
+                                                    else{                                                       
+                                                        System.out.printf("""
+                                                        \n%s=================================================================
+                                                                            ALTERAR PRODUTO  
+                                                        =================================================================%s 
+                                                        """, negrito, limpar);
 
-                                                    // bug do Scanner
-                                                    entrada.nextLine();
+                                                        gerenciarCardapio.exibirCardapio();
 
-                                                        System.out.print("\nAgora digite o novo produto para a posição ["+posicao+"]: ");
-                                                        String novoProduto = entrada.nextLine();
-                                                    
-                                                        System.out.print("Digite a nova descrição do produto: ");
-                                                        String novaDescricao = entrada.nextLine();
-                                                    
-                                                        System.out.print("Digite o novo valor do produto: R$");
-                                                        double novoPreco = lerDouble(entrada);
+                                                        System.out.print("Primeiro digite a posição do produto que você quer alterar.\nPosição: ");
+                                                        posicao = lerInteiro(entrada);
 
-                                                        //METÓDO para alterar o produto
-                                                        gerenciarCardapio.alterarProduto(posicao, novoProduto, novaDescricao, novoPreco);
+                                                        // bug do Scanner
+                                                        entrada.nextLine();
+
+                                                        // Condicional para verificar se a posição informada pelo usúario realmente existe no ArrayList.
+                                                        if (posicao >= 0 && posicao < gerenciarCardapio.produto.size() ){
+                                                            System.out.print("\nAgora digite o novo produto para a posição ["+posicao+"]: ");
+                                                            String novoProduto = entrada.nextLine();
                                                         
+                                                            System.out.print("Digite a nova descrição do produto: ");
+                                                            String novaDescricao = entrada.nextLine();
+                                                        
+                                                            System.out.print("Digite o novo valor do produto: R$");
+                                                            double novoPreco = lerDouble(entrada);
+
+                                                            //METÓDO para alterar o produto
+                                                            gerenciarCardapio.alterarProduto(posicao, novoProduto, novaDescricao, novoPreco);
+                                                            
+                                                            System.out.println("\nProduto alterado com sucesso!");  
+                                                        }
+                                                        else{
+                                                            System.out.print("\nPosição inválida!");
+                                                        }
+                                                                                                         
+                                                    }
                                                     break;
 
                                                 case 4:
-                                                    System.out.printf("""
-                                                    \n%s=================================================================
-                                                                        REMOVER PRODUTO  
-                                                    =================================================================%s
-                                                    """, negrito, limpar);
+                                                    if (cadarpioCadastrado == false) {
+                                                        System.out.println("Não há produtos para remover! Adicione um produto no cardápio primeiro.");
+                                                    }
 
-                                                    System.out.print("Digite a posição do produto que deseja remover: ");
-                                                    posicao = lerInteiro(entrada);
+                                                    else{
+                                                        System.out.printf("""
+                                                        \n%s=================================================================
+                                                                            REMOVER PRODUTO  
+                                                        =================================================================%s
+                                                        """, negrito, limpar);
 
-                                                    gerenciarCardapio.removerProduto(posicao);
+                                                        gerenciarCardapio.exibirCardapio();
+
+                                                        System.out.print("Digite a posição do produto que deseja remover: ");
+                                                        posicao = lerInteiro(entrada);
+
+                                                        gerenciarCardapio.removerProduto(posicao);
+                                                    }
+
                                                     break;
 
                                                 case 5:
-                                                    System.out.printf("""
-                                                    \n%s=================================================================
-                                                                        LIMPAR TODO CARDÁPIO  
-                                                    ================================================================= %s
-                                                    """, negrito , limpar);
-
-                                                    System.out.print("Deseja mesmo limpar todo cardápio? Se sim, escreva 'sim'.\nSe não, digite qualquer outra coisa.\nConfirme: ");
-                                                    String confirmacao = entrada.nextLine().toLowerCase();
-
-                                                    switch (confirmacao) {
-                                                        case "sim":
-                                                            gerenciarCardapio.limparCardapio();
-                                                            System.out.println("\nTodo o cardápio foi limpado com sucesso!");
-                                                            break; 
-                                                                    
-                                                        default:
-                                                            System.out.println("\nO cardápio não foi limpo!");
-                                                            break;
+                                                    if (cadarpioCadastrado == false) {
+                                                        System.out.println("Não há cardápio para limpar! Cadastre um cardápio primeiro.");
                                                     }
+
+                                                    else{
+                                                        System.out.printf("""
+                                                        \n%s=================================================================
+                                                                            LIMPAR TODO CARDÁPIO  
+                                                        ================================================================= %s
+                                                        """, negrito , limpar);
+
+                                                        System.out.print("Deseja mesmo limpar todo cardápio? Se sim, escreva 'sim'.\nSe não, digite qualquer outra coisa.\nConfirme: ");
+                                                        String confirmacao = entrada.nextLine().toLowerCase();
+
+                                                        switch (confirmacao) {
+                                                            case "sim":
+                                                                gerenciarCardapio.limparCardapio();
+                                                                System.out.println("\nTodo o cardápio foi limpado com sucesso!");
+
+                                                                cadarpioCadastrado = false;
+                                                                break; 
+                                                                        
+                                                            default:
+                                                                System.out.println("\nO cardápio não foi limpo!");
+                                                                break;
+                                                        }
+                                                        
+                                                    }
+
                                                     break;
 
                                                 case 0:
@@ -493,13 +534,13 @@ public class InterfaceConsole {
                             case 1:
                                 System.out.println("\n--- TELA DE CADASTRO ---");
 
-                                System.out.print("Digite o nome de usuário: ");
-                                String cadastroUsuario = entrada.nextLine();
+                                System.out.print("Digite o seu nome: ");
+                                String cadastroDono = entrada.nextLine();
                                 System.out.print("Digite a senha: ");
                                 String cadastroSenha = entrada.nextLine();
 
                                 // Chama o método de cadastrar o dono e passa as variaveis
-                                acesso.cadastrarDono(cadastroUsuario, cadastroSenha);
+                                acesso.cadastrarDono(cadastroDono, cadastroSenha);
                                             
                                 break;
 
@@ -507,17 +548,17 @@ public class InterfaceConsole {
                                 System.out.println("\n--- TELA DE LOGIN ---");
                                         
                                 if (acesso.donoCadastrado()) {
-                                    System.out.print("Digite o nome de usuário: ");
-                                    String usuario = entrada.nextLine();
+                                    System.out.print("Digite o seu nome: ");
+                                    String usuarioDono = entrada.nextLine();
 
                                     System.out.print("Digite a senha: ");
-                                    String senha = entrada.nextLine();
+                                    String senhaDono = entrada.nextLine();
 
                                     // Chama o método de autenticação e passa as var
-                                    boolean autenticado = acesso.autenticarDono(usuario, senha);
+                                    boolean autenticado = acesso.autenticarDono(usuarioDono, senhaDono);
 
                                     if (autenticado){
-                                        System.out.println("Acesso permitido! Bem-vindo "+ usuario +"!");
+                                        System.out.println("Acesso permitido! Bem-vindo "+ usuarioDono +"!");
 
                                         int opcaoSistemaRelatorio;
 
@@ -558,7 +599,7 @@ public class InterfaceConsole {
                                                     =================================================================%s
                                                     """, negrito, limpar);
 
-                                                    dono.exibirHistorico();
+                                                    dono.exibirHistorico(acesso.getUsuarioGerente(), acesso.getSenhaGerente());
                                                     break;
 
                                                 case 3:
@@ -627,26 +668,29 @@ public class InterfaceConsole {
     }// Main
 
     // Tratamento de erro utilizando try catch e uma estrutura de repetição
-    public static int lerInteiro(Scanner teclado) {
+    public static int lerInteiro(Scanner entrada) {
         while (true) {
             try {
-                return teclado.nextInt();            // Tenta ler um numero inteiro
+                return entrada.nextInt();  // Tenta ler um numero inteiro
+
             } catch (InputMismatchException e) {     // se vier texto, cai aqui
                 System.out.print("Valor inválido! Digite apenas números inteiros: ");
-                teclado.next();                      // joga fora o texto errado
+                entrada.next();                      // joga fora o texto errado
             }
         }
     }
 
     // Tratamento de erro utilizando try catch so que agora com double
-    public static double lerDouble(Scanner teclado) {
+    public static double lerDouble(Scanner entrada) {
         while (true) {
             try {
-                return teclado.nextDouble(); // Tenta ler um numero com vírgula
+                return entrada.nextDouble(); // Tenta ler um numero com vírgula
+
             } catch (InputMismatchException e) { // se vier texto, cai aqui
                 System.out.print("Valor inválido! Digite um número (ex: 10,50): ");
-                teclado.next(); // joga fora o texto errado
+                entrada.next(); // joga fora o texto errado
             }
         }
     }
+
 }

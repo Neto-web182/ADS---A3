@@ -19,9 +19,9 @@ public class ControleAcesso {
 
 
     // metódo que aplica as regras de cadastro e cadastra o gerente
-    public void cadastrarGerente(String cadastroUsuario, String cadastroSenha  ) {
+    public void cadastrarGerente(String cadastroGerente, String cadastroSenha  ) {
         if (usuarioGerente == null) {
-            this.usuarioGerente = cadastroUsuario;
+            this.usuarioGerente = cadastroGerente;
             this.senhaGerente   = cadastroSenha;
             System.out.println("\nCadastro do gerente realizado com sucesso!\n");
         }
@@ -32,9 +32,9 @@ public class ControleAcesso {
 
 
     // metódo que aplica as regras de cadastro e cadastra o dono
-    public void cadastrarDono(String cadastroUsuario, String cadastroSenha  ) {
+    public void cadastrarDono(String cadastroDono, String cadastroSenha  ) {
         if (usuarioDono == null){
-            this.usuarioDono = cadastroUsuario;
+            this.usuarioDono = cadastroDono;
             this.senhaDono   = cadastroSenha;
             System.out.println("\nCadastro do dono realizado com sucesso!\n");
         }
@@ -45,8 +45,8 @@ public class ControleAcesso {
 
 
     // Método para para autenticar o login do GERENTE
-    public boolean autenticarGerente(String usuario, String senha) {
-        if ( usuario.equals (this.usuarioGerente) && senha.equals (this.senhaGerente) ) {
+    public boolean autenticarGerente(String usuarioGerente, String senhaGerente) {
+        if ( usuarioGerente.equals (this.usuarioGerente) && senhaGerente.equals (this.senhaGerente) ) {
             return true;
         } 
         else {
@@ -54,9 +54,10 @@ public class ControleAcesso {
         }
     }
 
+
      // Método para para autenticar o login do DONO
-    public boolean autenticarDono(String usuario, String senha) {
-        if ( usuario.equals (this.usuarioDono) && senha.equals (this.senhaDono) ) {
+    public boolean autenticarDono(String usuarioDono, String senhaDono) {
+        if ( usuarioDono.equals (this.usuarioDono) && senhaDono.equals (this.senhaDono) ) {
             return true;
         } 
         else {
@@ -64,4 +65,14 @@ public class ControleAcesso {
             return false;
         }
     }
+
+
+    public String getUsuarioGerente(){
+        return this.usuarioGerente ;
+    }
+
+    public String getSenhaGerente(){
+        return this.senhaGerente;
+    }
+
 }
