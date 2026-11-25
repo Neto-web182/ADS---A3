@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class SistemaDoDono {
     
+    // Atributos (variáveis) de referencias a objetos
     private ArrayList <String> relatorioClientes = new ArrayList<>();
     private ArrayList <String> relatorioItemComprado = new ArrayList<>();
     private ArrayList <Double> relatorioPrecoItem = new ArrayList<>();

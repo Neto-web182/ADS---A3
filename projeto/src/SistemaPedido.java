@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class SistemaPedido {
 
+    // Atributos (variáveis) de referencias a objetos
     private ArrayList<String> resumoPedido = new ArrayList<>();
     private ArrayList<String> resumoDescricao = new ArrayList<>();
     private ArrayList<Double> resumoPreco = new ArrayList<>();

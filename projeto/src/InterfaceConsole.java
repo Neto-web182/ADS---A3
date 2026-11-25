@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 /**
  * @author do código: João Moura da Fonseca Neto
- * @since de finalização: 
- * @version 2.0
+ * Data de finalização: 25/11/26
+ * @version 3.0
  * 
 **/
 
