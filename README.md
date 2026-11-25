@@ -15,8 +15,8 @@ O objetivo deste sistema é organizar esse processo no terminal, separando o que
 
 ## Integrantes da Equipe
 
-* João Moura da Fonseca Neto
-* João Gabriel de Sousa Marques
+* Desenvolvedor principal: João Moura da Fonseca Neto
+* Desenvolvedor secundário: João Gabriel de Sousa Marques
 * Leandro Luis Maciel Xavier dos Santos
 * Dayvid Daniel Duarte Ramos
 * Mário Lúcio Costa de Oliveira
