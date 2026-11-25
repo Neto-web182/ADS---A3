@@ -22,8 +22,9 @@ public class InterfaceConsole {
         // var de customização da classe InterfaceConsole
         String corVermelha = "\u001B[91m";
         String corVerde    = "\u001B[92m";
-        String amarelo     = "\u001B[93m";
-        String corAzul     = "\u001B[94m";
+        String corAmarelo  = "\u001B[93m";
+        String corRoxo     = "\u001B[94m";
+        String corCiano    = "\u001B[96m";
         String limpar      = "\u001B[0m";
         String negrito     = "\u001B[1m";
 
@@ -36,13 +37,13 @@ public class InterfaceConsole {
 
         do{
             System.out.printf("""
-            \n%s======= PORTAL DE ACESSO =======%s
+            \n=======%s%s PORTAL DE ACESSO %s=======
             %s{1}%s - Acesso Cliente 
             %s{2}%s - Acesso Gerente (Login)
             %s{3}%s - Acesso Dono do Restaurante (Login)
             %s{0}%s - Encerrar sistema
             ===================================
-            Selecione seu perfil de acesso: """, negrito, limpar, corAzul ,limpar, corAzul, limpar, corAzul, limpar, corAzul, limpar);
+            Selecione seu perfil de acesso: """, negrito, corRoxo, limpar, corRoxo ,limpar, corRoxo, limpar, corRoxo, limpar, corRoxo, limpar);
             opcao = lerInteiro(entrada);
 
             // BUG do Scanner
@@ -61,11 +62,11 @@ public class InterfaceConsole {
 
                     do {
                         System.out.printf("""
-                        \n%s======= ATENDIMENTO AO CLIENTE (%s) =======%s
+                        \n%s=======%s ATENDIMENTO AO CLIENTE (%s) %s=======
                         {1} - Ver cardápio
                         {2} - Fazer pedido
                         {0} - Encerrar atendimento
-                        Escolha: """,negrito ,nomeCliente ,limpar);
+                        Escolha: """,negrito , corCiano, nomeCliente ,limpar);
 
                         opcaoCliente = lerInteiro(entrada);
                         entrada.nextLine();
@@ -164,7 +165,7 @@ public class InterfaceConsole {
                                 } while (opcaoInvalida);
 
                                 System.out.printf("\n%s____________________Resumo do pedido_____________________%s\n", negrito, limpar);
-                                System.out.println(amarelo);
+                                System.out.println(corAmarelo);
                                 pedidoCliente.exibirResumoPedido(); 
                                 System.out.print(limpar);
                                 System.out.println("_________________________________________________________");
@@ -262,12 +263,12 @@ public class InterfaceConsole {
                     do {
                         System.out.printf("""
                         \n==================================
-                        |     %sTela de Login Gerente%s      |
-                        |  [1] - Se cadastrar            |
-                        |  [2] - Fazer login             |
-                        |  [0] - Sair                    | 
+                        |     %s%sTela de Login Gerente%s      |
+                        |  %s[1]%s - Se cadastrar            |
+                        |  %s[2]%s - Fazer login             |
+                        |  %s[0]%s - Sair                    | 
                         ==================================
-                        Digite a opção correspondente: """, negrito, limpar);
+                        Digite a opção correspondente: """, negrito, corAmarelo, limpar, corAmarelo, limpar, corAmarelo, limpar, corAmarelo, limpar);
                         opcaoGerente = lerInteiro(entrada);
 
                         // bug do Scanner
@@ -305,8 +306,6 @@ public class InterfaceConsole {
 
                                         // var de parada do loop a seguir
                                         boolean continuarSistema = true;
-
-                                        boolean cadarpioCadastrado = false ;
 
                                         // loop gerente
                                         do{
@@ -364,12 +363,11 @@ public class InterfaceConsole {
 
                                                     System.out.println("\nNovo produto adicionado com sucesso!");
 
-                                                    cadarpioCadastrado = true;
                                                     break;
 
 
                                                 case 3:
-                                                    if (cadarpioCadastrado == false) {
+                                                    if (gerenciarCardapio.produto.size() == 0) {
                                                         System.out.println("Não há produtos para alterar! Adicione um produto no cardápio primeiro.");
                                                     }
 
@@ -412,7 +410,7 @@ public class InterfaceConsole {
                                                     break;
 
                                                 case 4:
-                                                    if (cadarpioCadastrado == false) {
+                                                    if (gerenciarCardapio.produto.size() == 0) {
                                                         System.out.println("Não há produtos para remover! Adicione um produto no cardápio primeiro.");
                                                     }
 
@@ -434,7 +432,7 @@ public class InterfaceConsole {
                                                     break;
 
                                                 case 5:
-                                                    if (cadarpioCadastrado == false) {
+                                                    if (gerenciarCardapio.produto.size() == 0) {
                                                         System.out.println("Não há cardápio para limpar! Cadastre um cardápio primeiro.");
                                                     }
 
@@ -453,7 +451,6 @@ public class InterfaceConsole {
                                                                 gerenciarCardapio.limparCardapio();
                                                                 System.out.println("\nTodo o cardápio foi limpado com sucesso!");
 
-                                                                cadarpioCadastrado = false;
                                                                 break; 
                                                                         
                                                             default:
@@ -470,13 +467,13 @@ public class InterfaceConsole {
                                                     \n%s=================================================================
                                                                         ENCERRANDO O SISTEMA...
                                                     ================================================================= %s
-                                                    """, negrito , limpar);
+                                                    """, negrito, limpar);
 
                                                     continuarSistema = gerenciarCardapio.encerrarMenu();
                                                     break; 
                                                 
                                                 default:
-                                                    System.out.println(corVermelha+"Opção inválida, digite uma opção existente."+limpar);
+                                                    System.out.println(corVermelha +"Opção inválida, digite uma opção existente."+ limpar);
                                                     break;
 
                                             } // Final do switch do gerente
@@ -486,7 +483,7 @@ public class InterfaceConsole {
 
                                     // Se o gerente não for autenticado
                                     else{
-                                        System.out.println(corVermelha+"Erro: Usuário ou senha incorretos."+limpar);
+                                        System.out.println(corVermelha +"Erro: Usuário ou senha incorretos."+ limpar);
                                     }
                                 }
 
@@ -502,7 +499,7 @@ public class InterfaceConsole {
                                 break;
 
                             default:
-                                System.out.println(corVermelha+"Opção inválida! Digite 1, 2 ou 0."+limpar);
+                                System.out.println(corVermelha +"Opção inválida! Digite 1, 2 ou 0."+ limpar);
                                 break;
 
                         } // final do switch tela de login do gerente  
@@ -519,12 +516,12 @@ public class InterfaceConsole {
                     do {
                         System.out.printf("""
                         \n==================================
-                        |     %sTela de Login do Dono%s      |
-                        |  [1] - Se cadastrar            |
-                        |  [2] - Fazer login             |
-                        |  [0] - Sair                    | 
+                        |     %s%sTela de Login do Dono%s      |
+                        |  %s[1]%s - Se cadastrar            |
+                        |  %s[2]%s - Fazer login             |
+                        |  %s[0]%s - Sair                    | 
                         ==================================
-                        Digite a opção correspondente: """, negrito, limpar);
+                        Digite a opção correspondente: """, negrito, corVerde, limpar, corVerde, limpar, corVerde, limpar, corVerde, limpar);
                         opcaoDono = lerInteiro(entrada);
 
                         // bug do Scanner
