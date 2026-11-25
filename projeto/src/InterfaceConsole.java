@@ -1,5 +1,4 @@
 package projeto.src;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -14,6 +13,7 @@ public class InterfaceConsole {
 
         // Objetos (variáveis de refência)
         Scanner entrada = new Scanner(System.in);
+        LeitorEntrada leitor              = new LeitorEntrada();
         ControleAcesso acesso             = new ControleAcesso();
         SistemaCardapio gerenciarCardapio = new SistemaCardapio() ;
         SistemaPedido pedidoCliente       = new SistemaPedido();
@@ -44,7 +44,7 @@ public class InterfaceConsole {
             %s{0}%s - Encerrar sistema
             ===================================
             Selecione seu perfil de acesso: """, negrito, corRoxo, limpar, corRoxo ,limpar, corRoxo, limpar, corRoxo, limpar, corRoxo, limpar);
-            opcao = lerInteiro(entrada);
+            opcao = leitor.lerInteiro(entrada);
 
             // BUG do Scanner
             entrada.nextLine();
@@ -68,7 +68,7 @@ public class InterfaceConsole {
                         {0} - Encerrar atendimento
                         Escolha: """,negrito , corCiano, nomeCliente ,limpar);
 
-                        opcaoCliente = lerInteiro(entrada);
+                        opcaoCliente = leitor.lerInteiro(entrada);
                         entrada.nextLine();
 
                         switch (opcaoCliente) {
@@ -99,7 +99,7 @@ public class InterfaceConsole {
                                     gerenciarCardapio.exibirCardapio();
                                    
                                     System.out.print("\n"+nomeCliente+", digite o número do seu pedido por gentileza: ");
-                                    int posicaoPedido = lerInteiro(entrada);
+                                    int posicaoPedido = leitor.lerInteiro(entrada);
 
                                     pedidoCliente.adicionarProduto(posicaoPedido, gerenciarCardapio.produto, gerenciarCardapio.descricao, gerenciarCardapio.preco);  
 
@@ -108,7 +108,7 @@ public class InterfaceConsole {
                                     [1] pra sim
                                     [0] pra não
                                     Opção: """);
-                                    continuarAdicionando = lerInteiro(entrada);
+                                    continuarAdicionando = leitor.lerInteiro(entrada);
                                     
                                    
                                 } while(continuarAdicionando != 0);
@@ -171,7 +171,7 @@ public class InterfaceConsole {
                                 System.out.println("_________________________________________________________");
 
                                 System.out.print("\nObs: responda com sim ou não\nSeu pedido está correto? ");
-                                String confirmacao = entrada.next().toLowerCase();
+                                String confirmacao = entrada.nextLine().toLowerCase();
 
                                 boolean confirmacaoPedido = pedidoCliente.confirmarPedido(confirmacao);
 
@@ -187,12 +187,12 @@ public class InterfaceConsole {
 
                                     do{
                                         System.out.printf("\nPrecisa de troco? ");
-                                        String respostaTroco = entrada.next().toLowerCase();
+                                        String respostaTroco = entrada.nextLine().toLowerCase();
 
                                         switch (respostaTroco) {
                                             case "sim":
                                                 System.out.print("\nTroco pra quanto?\nValor: R$");
-                                                double valor = lerDouble(entrada);
+                                                double valor = leitor.lerDouble(entrada);
 
                                                 boolean trocoRealizado = pedidoCliente.calcularTroco(valor, nomeCliente);
 
@@ -200,7 +200,7 @@ public class InterfaceConsole {
                                                     System.out.println("\nO valor informado é inferior ao valor do pedido. Digite o valor correto..");
                                                     
                                                     System.out.print("\nTroco pra quanto?\nValor: R$");
-                                                    valor = lerDouble(entrada);
+                                                    valor = leitor.lerDouble(entrada);
 
                                                     trocoRealizado = pedidoCliente.calcularTroco(valor, nomeCliente);
                                                 }
@@ -269,7 +269,7 @@ public class InterfaceConsole {
                         |  %s[0]%s - Sair                    | 
                         ==================================
                         Digite a opção correspondente: """, negrito, corAmarelo, limpar, corAmarelo, limpar, corAmarelo, limpar, corAmarelo, limpar);
-                        opcaoGerente = lerInteiro(entrada);
+                        opcaoGerente = leitor.lerInteiro(entrada);
 
                         // bug do Scanner
                         entrada.nextLine(); 
@@ -323,7 +323,7 @@ public class InterfaceConsole {
                                             """, negrito, limpar);  
 
                                             System.out.print("Digite sua opção: ");
-                                            int opcaoSistema = lerInteiro(entrada);
+                                            int opcaoSistema = leitor.lerInteiro(entrada);
 
                                             // BUG do Scanner
                                             entrada.nextLine();
@@ -356,7 +356,7 @@ public class InterfaceConsole {
                                                     String descricao = entrada.nextLine();
 
                                                     System.out.print("Digite o valor do novo produto: R$");
-                                                    double preco = lerDouble(entrada);
+                                                    double preco = leitor.lerDouble(entrada);
                                                     
                                                     // METÓDO para adicionar o produtoObject no arrayList
                                                     gerenciarCardapio.adicionarProduto(produto, descricao , preco);
@@ -381,7 +381,7 @@ public class InterfaceConsole {
                                                         gerenciarCardapio.exibirCardapio();
 
                                                         System.out.print("Primeiro digite a posição do produto que você quer alterar.\nPosição: ");
-                                                        posicao = lerInteiro(entrada);
+                                                        posicao = leitor.lerInteiro(entrada);
 
                                                         // bug do Scanner
                                                         entrada.nextLine();
@@ -395,7 +395,7 @@ public class InterfaceConsole {
                                                             String novaDescricao = entrada.nextLine();
                                                         
                                                             System.out.print("Digite o novo valor do produto: R$");
-                                                            double novoPreco = lerDouble(entrada);
+                                                            double novoPreco = leitor.lerDouble(entrada);
 
                                                             //METÓDO para alterar o produto
                                                             gerenciarCardapio.alterarProduto(posicao, novoProduto, novaDescricao, novoPreco);
@@ -424,7 +424,7 @@ public class InterfaceConsole {
                                                         gerenciarCardapio.exibirCardapio();
 
                                                         System.out.print("Digite a posição do produto que deseja remover: ");
-                                                        posicao = lerInteiro(entrada);
+                                                        posicao = leitor.lerInteiro(entrada);
 
                                                         gerenciarCardapio.removerProduto(posicao);
                                                     }
@@ -522,7 +522,7 @@ public class InterfaceConsole {
                         |  %s[0]%s - Sair                    | 
                         ==================================
                         Digite a opção correspondente: """, negrito, corVerde, limpar, corVerde, limpar, corVerde, limpar, corVerde, limpar);
-                        opcaoDono = lerInteiro(entrada);
+                        opcaoDono = leitor.lerInteiro(entrada);
 
                         // bug do Scanner
                         entrada.nextLine(); 
@@ -573,7 +573,7 @@ public class InterfaceConsole {
                                             """, negrito, limpar);  
 
                                             System.out.print("Digite sua opção: ");
-                                            opcaoSistemaRelatorio = lerInteiro(entrada);
+                                            opcaoSistemaRelatorio = leitor.lerInteiro(entrada);
 
                                             // Bug do scanner
                                             entrada.nextLine();
@@ -663,31 +663,5 @@ public class InterfaceConsole {
         System.out.println(corVerde+"\nSistema encerrado!!"+limpar);
 
     }// Main
-
-    // Tratamento de erro utilizando try catch e uma estrutura de repetição
-    public static int lerInteiro(Scanner entrada) {
-        while (true) {
-            try {
-                return entrada.nextInt();  // Tenta ler um numero inteiro
-
-            } catch (InputMismatchException e) {     // se vier texto, cai aqui
-                System.out.print("Valor inválido! Digite apenas números inteiros: ");
-                entrada.next();                      // joga fora o texto errado
-            }
-        }
-    }
-
-    // Tratamento de erro utilizando try catch so que agora com double
-    public static double lerDouble(Scanner entrada) {
-        while (true) {
-            try {
-                return entrada.nextDouble(); // Tenta ler um numero com vírgula
-
-            } catch (InputMismatchException e) { // se vier texto, cai aqui
-                System.out.print("Valor inválido! Digite um número (ex: 10,50): ");
-                entrada.next(); // joga fora o texto errado
-            }
-        }
-    }
 
 }
