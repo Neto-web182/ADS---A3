@@ -137,7 +137,7 @@ public class InterfaceConsole {
 
                                                         System.out.printf(corVerde+"\nPedido adicionado com sucesso!!\n"+limpar);
                                                     }
-                                                    
+
                                                     else{
                                                         System.out.print("\nPosição inválida!\n");
                                                     }
@@ -409,12 +409,18 @@ public class InterfaceConsole {
 
                                                     System.out.print("Digite o valor do novo produto: R$");
                                                     double preco = leitor.lerDouble(entrada);
+
+                                                    while(preco <= 0){
+                                                        System.out.println("Preço inválido!\n");
+
+                                                        System.out.print("Digite o valor do novo produto: R$");
+                                                        preco = leitor.lerDouble(entrada);
+                                                    }
                                                     
                                                     // METÓDO para adicionar o produtoObject no arrayList
                                                     gerenciarCardapio.adicionarProduto(produto, descricao , preco);
 
                                                     System.out.println("\nNovo produto adicionado com sucesso!");
-
                                                     break;
 
 
