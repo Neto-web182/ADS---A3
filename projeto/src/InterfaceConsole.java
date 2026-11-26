@@ -132,7 +132,7 @@ public class InterfaceConsole {
                                                         gerenciarCardapio.preco
                                                     );
 
-                                                    System.out.printf("\nPedido adicionado com sucesso!!\n");
+                                                    System.out.printf(corVerde+"\nPedido adicionado com sucesso!!\n"+limpar);
                                                     break;
 
                                                 case 0:
