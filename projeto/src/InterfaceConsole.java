@@ -455,6 +455,13 @@ public class InterfaceConsole {
                                                             System.out.print("Digite o novo valor do produto: R$");
                                                             double novoPreco = leitor.lerDouble(entrada);
 
+                                                             while(novoPreco <= 0){
+                                                                System.out.println("Preço inválido!\n");
+
+                                                                System.out.print("Digite o valor do novo produto: R$");
+                                                                novoPreco = leitor.lerDouble(entrada);
+                                                            }
+
                                                             //METÓDO para alterar o produto
                                                             gerenciarCardapio.alterarProduto(posicao, novoProduto, novaDescricao, novoPreco);
                                                             
