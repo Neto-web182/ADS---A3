@@ -125,14 +125,22 @@ public class InterfaceConsole {
                                                     System.out.print("\nDigite o número do seu próximo pedido por gentileza: ");
                                                     posicaoPedido = leitor.lerInteiro(entrada);
 
-                                                    pedidoCliente.adicionarPedido(
-                                                        posicaoPedido,
-                                                        gerenciarCardapio.produto, 
-                                                        gerenciarCardapio.descricao, 
-                                                        gerenciarCardapio.preco
-                                                    );
+                                                    // if para verifiar se a posição informada existe no array
+                                                    if (posicaoPedido >= 0 && posicaoPedido < gerenciarCardapio.produto.size()) {
 
-                                                    System.out.printf(corVerde+"\nPedido adicionado com sucesso!!\n"+limpar);
+                                                        pedidoCliente.adicionarPedido(
+                                                            posicaoPedido,
+                                                            gerenciarCardapio.produto,
+                                                            gerenciarCardapio.descricao,
+                                                            gerenciarCardapio.preco
+                                                        );  
+
+                                                        System.out.printf(corVerde+"\nPedido adicionado com sucesso!!\n"+limpar);
+                                                    }
+                                                    
+                                                    else{
+                                                        System.out.print("\nPosição inválida!\n");
+                                                    }
                                                     break;
 
                                                 case 0:
