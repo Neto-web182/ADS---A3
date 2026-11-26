@@ -137,7 +137,7 @@ java projeto.src.InterfaceConsole
 
 Para demonstrar o funcionamento completo do sistema e das permissões, siga esta ordem:
 
-1. **Testar o bloqueio do Cliente:** Entre na opção `1` (Cliente), digite um nome e tente fazer um pedido (`2`). O sistema vai avisar que o cardápio está vazio. Volte ao menu inicial (`0`).
-2. **Cadastrar o Gerente e criar o cardápio:** Entre na opção `2` (Gerente), faça o cadastro na opção `1` e depois o login na opção `2`. Adicione pelo menos um produto no cardápio (opção `2`) e saia até o menu principal.
+1. **Testar o bloqueio do Cliente:** Entre na opção `1` (Cliente), digite seu nome e tente ver o cardápio (`1`). O sistema vai avisar que o cardápio está vazio. Volte ao menu inicial (`0`).
+2. **Cadastrar o Gerente e criar o cardápio:** Entre na opção `2` (Gerente), faça o cadastro na opção `1` e depois o login na opção `2`. Adicione pelo menos um produto no cardápio (opção `2`) e saia até o menu principal (Portal de acesso).
 3. **Fazer um pedido:** Entre novamente como Cliente (`1`), faça um pedido (`2`), escolha o produto cadastrado, selecione `entrega`, informe o bairro `planalto` e um endereço. Confirme o pedido com `sim` e teste o cálculo de troco.
 4. **Conferir relatórios como Dono:** Volte ao menu inicial, entre na opção `3` (Dono), faça o cadastro (`1`) e o login (`2`). Acesse o faturamento do dia (`1`) e o histórico (`2`) para ver o pedido registrado e as credenciais do gerente.

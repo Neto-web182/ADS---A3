@@ -20,22 +20,14 @@ public class SistemaPedido {
 
     
     // Metódo para adcionar o produto nas arrayList da classe atual
-    public void adicionarProduto(int posicaoPedido, ArrayList<String> produto, ArrayList<String> descricao, ArrayList<Double> preco) {
-        // if para verifiar se a posição informada existe no array
-        if (posicaoPedido >= 0 && posicaoPedido < produto.size()) {
+    public void adicionarPedido(int posicaoPedido, ArrayList<String> produto, ArrayList<String> descricao, ArrayList<Double> preco) {
+        resumoPedido.add ( produto.get (posicaoPedido) );
+        resumoDescricao.add ( descricao.get (posicaoPedido) );
+        resumoPreco.add ( preco.get (posicaoPedido) );
 
-            resumoPedido.add ( produto.get (posicaoPedido) );
-            resumoDescricao.add ( descricao.get (posicaoPedido) );
-            resumoPreco.add ( preco.get (posicaoPedido) );
-
-            subTotal += preco.get ( posicaoPedido );
-            valorTotal += preco. get ( posicaoPedido );
-            quantidadeItens += 1;
-
-            System.out.printf("\nPedido adicionado com sucesso!!\n");
-        } else {
-            System.out.print("\nPosição inválida!\n");
-        }
+        subTotal += preco.get ( posicaoPedido );
+        valorTotal += preco. get ( posicaoPedido );
+        quantidadeItens += 1;         
     }
 
 

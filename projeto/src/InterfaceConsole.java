@@ -88,31 +88,70 @@ public class InterfaceConsole {
                                     break;
                                 }
 
-                                int continuarAdicionando;
+                                System.out.printf("""
+                                \n%s==================================================================
+                                                      CARDÁPIO  
+                                ==================================================================%s
+                                """, negrito, limpar);   
+                                gerenciarCardapio.exibirCardapio();
 
-                                do{
-                                    System.out.printf("""
-                                    \n%s==================================================================
-                                                          CARDÁPIO  
-                                    ==================================================================%s
-                                    """, negrito, limpar);   
-                                    gerenciarCardapio.exibirCardapio();
-                                   
+                                int continuarAdicionando = 1;  // Mantém o loop ativo para pedir uma nova posição válida
+                                do{ 
                                     System.out.print("\n"+nomeCliente+", digite o número do seu pedido por gentileza: ");
                                     int posicaoPedido = leitor.lerInteiro(entrada);
 
-                                    pedidoCliente.adicionarProduto(posicaoPedido, gerenciarCardapio.produto, gerenciarCardapio.descricao, gerenciarCardapio.preco);  
+                                    // if para verifiar se a posição informada existe no array
+                                    if (posicaoPedido >= 0 && posicaoPedido < gerenciarCardapio.produto.size()) {
 
-                                    System.out.print("""
-                                    Deseja adicionar um novo item?
-                                    [1] pra sim
-                                    [0] pra não
-                                    Opção: """);
-                                    continuarAdicionando = leitor.lerInteiro(entrada);
-                                    
-                                   
+                                        pedidoCliente.adicionarPedido(
+                                            posicaoPedido,
+                                            gerenciarCardapio.produto,
+                                            gerenciarCardapio.descricao,
+                                            gerenciarCardapio.preco
+                                        );  
+
+                                        System.out.printf(corVerde+"\nPedido adicionado com sucesso!!\n"+limpar);
+                                        
+                                        do{
+                                            System.out.print("""
+                                            Deseja adicionar um novo item?
+                                            [1] para sim
+                                            [0] para não
+                                            Opção: """);
+                                            continuarAdicionando = leitor.lerInteiro(entrada); 
+                                                
+                                            switch(continuarAdicionando){
+                                                case 1:
+                                                    System.out.print("\nDigite o número do seu próximo pedido por gentileza: ");
+                                                    posicaoPedido = leitor.lerInteiro(entrada);
+
+                                                    pedidoCliente.adicionarPedido(
+                                                        posicaoPedido,
+                                                        gerenciarCardapio.produto, 
+                                                        gerenciarCardapio.descricao, 
+                                                        gerenciarCardapio.preco
+                                                    );
+
+                                                    System.out.printf("\nPedido adicionado com sucesso!!\n");
+                                                    break;
+
+                                                case 0:
+                                                    System.out.println("\nOk.");
+                                                    break;
+
+                                                default:
+                                                    System.out.println(corVermelha+"\nOpção inválida!! Por favor digite '1' para sim ou '0' para não.\n"+limpar);
+                                                    break;
+                                                }
+                                        } while (continuarAdicionando != 0);
+                                                                        
+                                    }                            
+                                    else{
+                                        System.out.print("\nPosição inválida!\n");
+                                    }
+
                                 } while(continuarAdicionando != 0);
-
+                                                                                                                         
                                 // Bug do scanner
                                 entrada.nextLine();
 
@@ -179,8 +218,13 @@ public class InterfaceConsole {
                                     System.out.println("Perfeito "+ nomeCliente +"!!");
 
                                     // chamando o metódo para registrar o pedido no sistema de relatório do dono
-                                    dono.registrarPedido( nomeCliente, pedidoCliente.getResumoPedido() , pedidoCliente.getResumoPreco() ,
-                                    pedidoCliente.getValorTotal() , pedidoCliente.getTaxaEntrega() );
+                                    dono.registrarPedido(
+                                        nomeCliente, 
+                                        pedidoCliente.getResumoPedido(), 
+                                        pedidoCliente.getResumoPreco() ,
+                                        pedidoCliente.getValorTotal() ,
+                                        pedidoCliente.getTaxaEntrega() 
+                                    );
 
                                     //var de parada do loop a seguir 
                                     boolean continuarLoopTroco = true;
@@ -276,7 +320,7 @@ public class InterfaceConsole {
 
                         switch (opcaoGerente) {
                             case 1:
-                                System.out.println("\n--- TELA DE CADASTRO ---");
+                                System.out.println("\n___ TELA DE CADASTRO ___");
 
                                 System.out.print("Digite o seu nome: ");
                                 String cadastroGerente = entrada.nextLine();
@@ -289,7 +333,7 @@ public class InterfaceConsole {
                                 break;
 
                             case 2:
-                                System.out.println("\n--- TELA DE LOGIN ---");
+                                System.out.println("\n___ TELA DE LOGIN ___");
                                         
                                 if (acesso.gerenteCadastrado()) {
                                     System.out.print("Digite o seu nome: ");
@@ -443,7 +487,10 @@ public class InterfaceConsole {
                                                         ================================================================= %s
                                                         """, negrito , limpar);
 
-                                                        System.out.print("Deseja mesmo limpar todo cardápio? Se sim, escreva 'sim'.\nSe não, digite qualquer outra coisa.\nConfirme: ");
+                                                        System.out.print("""
+                                                        Deseja mesmo limpar todo cardápio? Se sim, escreva 'sim'.
+                                                        Se não, digite qualquer outra coisa.
+                                                        Confirme: """);
                                                         String confirmacao = entrada.nextLine().toLowerCase();
 
                                                         switch (confirmacao) {
@@ -529,7 +576,7 @@ public class InterfaceConsole {
 
                         switch (opcaoDono) {
                             case 1:
-                                System.out.println("\n--- TELA DE CADASTRO ---");
+                                System.out.println("\n___ TELA DE CADASTRO ___");
 
                                 System.out.print("Digite o seu nome: ");
                                 String cadastroDono = entrada.nextLine();
@@ -542,7 +589,7 @@ public class InterfaceConsole {
                                 break;
 
                             case 2:
-                                System.out.println("\n--- TELA DE LOGIN ---");
+                                System.out.println("\n___ TELA DE LOGIN ___");
                                         
                                 if (acesso.donoCadastrado()) {
                                     System.out.print("Digite o seu nome: ");
